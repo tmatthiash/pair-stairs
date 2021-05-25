@@ -1,7 +1,7 @@
 <template>
   <div class="new-stair-options">
-    <div class="new stair-options-text">Create a new pair stair, start by picking a name.</div>
-    <form>
+    <div class="new-stair-options-text">Create a new pair stair, start by picking a name.</div>
+    <form class="new-stair-options-form">
       <input v-model="form.stairName" required placeholder="Name of the new pair of stairs"/>
       <label>Next enter in a PIN for the room or a password (PIN must be 4 numbers).
            Anything other than 4 numbers will be a password</label>
@@ -41,4 +41,9 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 @import "../../../colors.scss";
+
+.new-stair-options-form {
+    display: flex;
+    flex-direction: column;
+}
 </style>

@@ -37,12 +37,18 @@ export default defineComponent({
   margin-top: 150px;
 }
 
+.home-page-button-holder {
+  margin-top: 16px;
+}
+
 .home-page-button-holder-button {
   @include color-theme('background-color', 'primary-accent');
   @include color-theme('border-color', 'primary-border');
   @include color-theme('color', 'primary-accent-text');
 
-  padding: 0 8px;
+  margin: 0 16px;
+  font-size: 30px;
+  padding: 4px 16px;
   text-decoration: none;
   border: 1px solid;
   border-radius: 5px;

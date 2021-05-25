@@ -30,6 +30,8 @@ export default defineComponent({
     padding-top: 150px;
     height: 100%;
     width: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
 .new-stair-text {

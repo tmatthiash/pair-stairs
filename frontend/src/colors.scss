@@ -3,11 +3,19 @@
 $themes: (
     default: (
             primary-background: orange,
+            primary-text: #0d2c54,
             primary-accent: #0d2c54,
             primary-border: #fff,
             primary-accent-text: #fff
 
     ),
+    emily: (
+            primary-background: #ee9214,
+            primary-text: #5db2df,
+            primary-accent: #5db2df,
+            primary-border: #464957,
+            primary-accent-text: green
+    )
 );
 
 
