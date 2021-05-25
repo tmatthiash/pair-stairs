@@ -2,11 +2,13 @@
 
 $themes: (
     default: (
-            primary-background: orange,
+            primary-background: #ffd588,
+            secondary-background: #fff,
             primary-text: #0d2c54,
             primary-accent: #0d2c54,
             primary-border: #fff,
-            primary-accent-text: #fff
+            primary-accent-text: #fff,
+            box-shadow-settings: inset 0px 0px 50px 40px #FF9F0B
 
     ),
     emily: (

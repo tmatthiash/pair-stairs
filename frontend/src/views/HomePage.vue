@@ -1,8 +1,8 @@
 <template>
   <div class="home-page">
-    <div class="home-page-banner">
-      Welcome to Pair Stairs dot something, you ready to pair up some stairs??????
-    </div>
+    <div
+      class="home-page-banner"
+    >Welcome to Pair Stairs dot something, you ready to pair up some stairs??????</div>
     <div class="home-page-button-holder">
       <router-link class="home-page-button-holder-button" to="/newStair">Create a new stair set!</router-link>
       <router-link class="home-page-button-holder-button" to="/newStair">Join an existing room</router-link>
@@ -14,23 +14,26 @@
 import { defineComponent } from "vue";
 
 export default defineComponent({
-  name: "HomePage"
+  name: "HomePage",
 });
 </script>
 
 <style lang="scss" scoped>
 @import "../colors.scss";
 
-.home-page {    
-    @include color-theme('background-color', 'primary-background');
+.home-page {
+  @include color-theme("background-color", "secondary-background");
+  @include color-theme("-webkit-box-shadow", "box-shadow-settings");
+  @include color-theme("box-shadow", "box-shadow-settings");
 
-    padding-top: 150px;
-    height: 100%;
-    width: 100%;
+
+  padding-top: 150px;
+  height: 100%;
+  width: 100%;
 }
 
 .home-page-banner {
-  @include color-theme('color', 'primary-accent');
+  @include color-theme("color", "primary-accent");
 
   font-size: 36px;
   width: 100%;
@@ -42,9 +45,9 @@ export default defineComponent({
 }
 
 .home-page-button-holder-button {
-  @include color-theme('background-color', 'primary-accent');
-  @include color-theme('border-color', 'primary-border');
-  @include color-theme('color', 'primary-accent-text');
+  @include color-theme("background-color", "primary-accent");
+  @include color-theme("border-color", "primary-border");
+  @include color-theme("color", "primary-accent-text");
 
   margin: 0 16px;
   font-size: 30px;
