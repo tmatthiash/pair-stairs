@@ -4,9 +4,8 @@
       Welcome to Pair Stairs dot something, you ready to pair up some stairs??????
     </div>
     <div class="home-page-button-holder">
-      <router-link to="/newStair">Home</router-link>
-      <button>Create a new pair stair</button>
-      <button>Join an existing pair stair</button>
+      <router-link class="home-page-button-holder-button" to="/newStair">Create a new stair set!</router-link>
+      <router-link class="home-page-button-holder-button" to="/newStair">Join an existing room</router-link>
     </div>
   </div>
 </template>
@@ -33,7 +32,19 @@ export default defineComponent({
 .home-page-banner {
   @include color-theme('color', 'primary-accent');
 
+  font-size: 36px;
   width: 100%;
   margin-top: 150px;
+}
+
+.home-page-button-holder-button {
+  @include color-theme('background-color', 'primary-accent');
+  @include color-theme('border-color', 'primary-border');
+  @include color-theme('color', 'primary-accent-text');
+
+  padding: 0 8px;
+  text-decoration: none;
+  border: 1px solid;
+  border-radius: 5px;
 }
 </style>
