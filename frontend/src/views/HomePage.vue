@@ -3,6 +3,11 @@
     <div class="home-page-banner">
       Welcome to Pair Stairs dot something, you ready to pair up some stairs??????
     </div>
+    <div class="home-page-button-holder">
+      <router-link to="/newStair">Home</router-link>
+      <button>Create a new pair stair</button>
+      <button>Join an existing pair stair</button>
+    </div>
   </div>
 </template>
 
@@ -14,7 +19,7 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import "../colors.scss";
 
 .home-page {    

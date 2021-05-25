@@ -2,6 +2,7 @@ import Vue from "vue";
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import Home from "../views/Home.vue";
 import HomePage from "../views/HomePage.vue"
+import NewStair from "../components/NewStair/NewStair.vue"
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -13,6 +14,11 @@ const routes: Array<RouteRecordRaw> = [
     path: "/homepage",
     name: "HomePage",
     component: HomePage,
+  },
+  {
+    path: "/newstair",
+    name: "NewStair",
+    component: NewStair,
   },
   {
     path: "/about",
