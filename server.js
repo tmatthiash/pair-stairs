@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
@@ -12,6 +13,15 @@ app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('static'));
+
+const db = require("./src/models/index")
+
+db.sequelize.authenticate().then(() => {
+    console.log("***Success***");
+})
+.catch(()=> {
+    console.log("***Failure***");
+})
 
 app.use("/", express.static("frontend/dist"));
 app.get("/*", (req, res) => {
