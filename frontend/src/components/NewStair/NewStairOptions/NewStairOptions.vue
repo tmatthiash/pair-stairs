@@ -1,7 +1,7 @@
 <template>
   <div class="new-stair-options">
     <div class="new-stair-options-text">Start by picking a name.</div>
-    <form class="new-stair-options-form">
+    <form @submit="onSubmit" class="new-stair-options-form">
       <input
         class="new-stair-options-form-input"
         v-model="form.stairName"
@@ -20,10 +20,19 @@
         Entering a
         <span class="new-stair-options-form-input-label-last">password</span>
       </label>
-      <input class="new-stair-options-form-input" id="passwordInput" placeholder="PIN/Password" v-model="form.stairPassOrPin" />
+      <input
+        class="new-stair-options-form-input"
+        id="passwordInput"
+        placeholder="PIN/Password"
+        v-model="form.stairPassOrPin"
+      />
       <div class="new-stair-options-form-button-area">
-        <button type="submit" class="new-stair-options-form-button">Create Stair Pairs</button>
-        <router-link class="new-stair-options-form-button" to="/homepage">Back to Home Page</router-link>
+        <button type="submit" class="new-stair-options-form-button">
+          Create Stair Pairs
+        </button>
+        <router-link class="new-stair-options-form-button" to="/homepage"
+          >Back to Home Page</router-link
+        >
       </div>
     </form>
   </div>
@@ -31,6 +40,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import axios from "axios";
 
 export default defineComponent({
   name: "NewStairOptions",
@@ -42,6 +52,14 @@ export default defineComponent({
         stairPassOrPin: "",
       },
     };
+  },
+  methods: {
+    onSubmit() {
+      axios.post(`http://${process.env.VUE_APP_API_URL}:${process.env.VUE_APP_API_PORT}/api/pairstairs/`)
+      .then(res => {
+        console.log(res);
+      })
+    }
   },
   computed: {
     isPin() {
@@ -76,7 +94,7 @@ export default defineComponent({
 
 .new-stair-options-form-input {
   @include color-theme("border-color", "primary-accent");
-  
+
   font-size: 16px;
   height: 36px;
   width: 300px;
