@@ -22,7 +22,7 @@ export default defineComponent({
 @import "../colors.scss";
 
 .home-page {
-  @include color-theme("background-color", "secondary-background");
+  @include color-theme("background-color", "primary-background");
   @include color-theme("-webkit-box-shadow", "box-shadow-settings");
   @include color-theme("box-shadow", "box-shadow-settings");
 

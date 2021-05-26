@@ -20,7 +20,7 @@
         Entering a
         <span class="new-stair-options-form-input-label-last">password</span>
       </label>
-      <input class="new-stair-options-form-input" id="passwordInput" v-model="form.stairPassOrPin" />
+      <input class="new-stair-options-form-input" id="passwordInput" placeholder="PIN/Password" v-model="form.stairPassOrPin" />
       <div class="new-stair-options-form-button-area">
         <button type="submit" class="new-stair-options-form-button">Create Stair Pairs</button>
         <router-link class="new-stair-options-form-button" to="/homepage">Back to Home Page</router-link>

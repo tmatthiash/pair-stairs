@@ -8,15 +8,17 @@ $themes: (
             primary-accent: #0d2c54,
             primary-border: #fff,
             primary-accent-text: #fff,
-            box-shadow-settings: inset 0px 0px 50px 40px #FF9F0B
+            box-shadow-settings: inset 0px 0px 130px 148px #FF9F0B
 
     ),
     emily: (
-            primary-background: #ee9214,
-            primary-text: #5db2df,
-            primary-accent: #5db2df,
-            primary-border: #464957,
-            primary-accent-text: green
+        primary-background: #ffd588,
+        secondary-background: #fff,
+        primary-text: #0d2c54,
+        primary-accent: #0d2c54,
+        primary-border: #fff,
+        primary-accent-text: #fff,
+        box-shadow-settings: none
     )
 );
 
