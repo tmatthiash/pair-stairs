@@ -13,7 +13,7 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.STRING
         },
         theme: {
-            type: Sequelize.BOOLEAN
+            type: Sequelize.STRING
         },
         lastAccessed: {
             type: Sequelize.DATE

@@ -22,3 +22,14 @@
 `npm run start`
 
 This will start the server on port **8080**. Accessing the frontend files that are served up with webpack can be done by going strait to localhost:8080. (In a production env port 8081 won't be used at all.)
+
+
+
+## Nice to know stuff
+how to kill a specific port when your shit crashes
+
+`sudo fuser -k 8080/tcp`
+
+Connect to mysql in terminal
+
+`mysql -u root -p`

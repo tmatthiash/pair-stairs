@@ -4,7 +4,7 @@
     <form @submit="onSubmit" class="new-stair-options-form">
       <input
         class="new-stair-options-form-input"
-        v-model="form.stairName"
+        v-model="form.name"
         required
         placeholder="Name of the new pair of stairs"
       />
@@ -24,7 +24,7 @@
         class="new-stair-options-form-input"
         id="passwordInput"
         placeholder="PIN/Password"
-        v-model="form.stairPassOrPin"
+        v-model="form.password"
       />
       <div class="new-stair-options-form-button-area">
         <button type="submit" class="new-stair-options-form-button">
@@ -48,24 +48,44 @@ export default defineComponent({
     return {
       isSetToPin: true,
       form: {
-        stairName: "",
-        stairPassOrPin: "",
+        name: "",
+        password: "",
       },
     };
   },
   methods: {
-    onSubmit() {
-      axios.post(`http://${process.env.VUE_APP_API_URL}:${process.env.VUE_APP_API_PORT}/api/pairstairs/`)
-      .then(res => {
-        console.log(res);
-      })
-    }
+    // onSubmit(e: { preventDefault: () => void; }) {
+    //   e.preventDefault();
+    //   axios
+    //     .post(
+    //       `http://${process.env.VUE_APP_API_URL}:${process.env.VUE_APP_API_PORT}/api/pairstairs/`,
+    //       this.form
+    //     )
+    //     .then((res) => {
+    //       console.log(res);
+    //     });
+    // },
+    onSubmit(e: { preventDefault: () => void }) {
+      e.preventDefault();
+      axios
+        .get(
+          `http://${process.env.VUE_APP_API_URL}:${process.env.VUE_APP_API_PORT}/api/pairstairs/`,
+          {
+            params: {
+              name: this.form.name,
+            },
+          }
+        )
+        .then((res) => {
+          console.log(res);
+        });
+    },
   },
   computed: {
     isPin() {
       if (
-        !isNaN(Number(this.form.stairPassOrPin)) &&
-        this.form.stairPassOrPin.length <= 4
+        !isNaN(Number(this.form.password)) &&
+        this.form.password.length <= 4
       ) {
         return true;
       } else {
