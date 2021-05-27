@@ -32,7 +32,7 @@ db.sequelize.authenticate().then(() => {
 db.sequelize.sync();
 
 app.use("/", express.static("frontend/dist"));
-app.get("/*", (req, res) => {
+app.get("/", (req, res) => {
     const path = require("path");
     res.sendFile(path.resolve("frontend/dist/index.html"));
 })
@@ -41,7 +41,8 @@ require('./auth');
 app.use(passport.initialize());
 app.use(passport.session());
 
-require("./src/routes/pairstair.route")(app);
+require("./src/routes/pairmatrix.route")(app);
+require("./src/routes/authentication.route")(app);
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {

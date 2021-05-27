@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt');
 
 const connectEnsureLogin = require('connect-ensure-login')
 const db = require("../models");
-const PairStair = db.pairstair;
+const PairMatrix = db.pairmatrix;
 const Op = db.Sequelize.Op;
 
 
@@ -16,21 +16,22 @@ exports.create = async (req, res) => {
 
     const passwordHash = await bcrypt.hash(req.body.password, 10);
 
-    const newPairStair = {
+    const newPairMatrix = {
         name: req.body.name,
         theme: "default",
         lastAccessed: new Date(),
         password: passwordHash
     }
 
-    PairStair.create(newPairStair)
+    PairMatrix.create(newPairMatrix)
         .then(data => {
-            res.send(data);
+            const response = {...data, password: "That's Secret"}
+            res.send(response);
         })
         .catch(err => {
             res.status(500).send({
                 message:
-                    err.message || "Some error occurred while creating the PairStair."
+                    err.message || "Some error occurred while creating the Pair Matrix."
             });
         });
 };
@@ -38,14 +39,18 @@ exports.create = async (req, res) => {
 exports.findByName = connectEnsureLogin.ensureLoggedIn(), (req, res) => {
     const name = req.params.name;
 
-    PairStair.findOne({ where: { name } })
+    PairMatrix.findOne({
+        where: { name },
+        attributes: {
+            exclude: ['password']
+        }
+    })
         .then(data => {
-            delete data.password;
             res.send(data);
         })
         .catch(err => {
             res.status(500).send({
-                message: "Error retrieving pair stair with name" + name
+                message: "Error retrieving pair matrix with name" + name
             });
         });
 };

@@ -6,7 +6,7 @@
 import { defineComponent } from "vue";
 
 export default defineComponent({
-  name: "PairStairPage",
+  name: "PairMatrixPage",
   props: {
     name: {
       type: String,

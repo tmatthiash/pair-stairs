@@ -19,14 +19,14 @@ const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
-db.pairstair = require("./pairstair.model.js")(sequelize, Sequelize);
+db.pairmatrix = require("./pairmatrix.model.js")(sequelize, Sequelize);
 db.user = require("./user.model.js")(sequelize, Sequelize);
 db.pairset = require("./pairSet.model.js")(sequelize, Sequelize);
 
-db.user.belongsTo(db.pairstair);
-db.pairstair.hasMany(db.user);
+db.user.belongsTo(db.pairmatrix);
+db.pairmatrix.hasMany(db.user);
 
-db.pairset.belongsTo(db.pairstair);
-db.pairstair.hasMany(db.pairset);
+db.pairset.belongsTo(db.pairmatrix);
+db.pairmatrix.hasMany(db.pairset);
 
 module.exports = db;

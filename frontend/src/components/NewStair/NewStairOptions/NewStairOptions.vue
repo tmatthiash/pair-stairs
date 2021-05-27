@@ -54,32 +54,26 @@ export default defineComponent({
     };
   },
   methods: {
-    // onSubmit(e: { preventDefault: () => void; }) {
-    //   e.preventDefault();
-    //   axios
-    //     .post(
-    //       `http://${process.env.VUE_APP_API_URL}:${process.env.VUE_APP_API_PORT}/api/pairstairs/`,
-    //       this.form
-    //     )
-    //     .then((res) => {
-    //       console.log(res);
-    //     });
-    // },
-    onSubmit(e: { preventDefault: () => void }) {
+    onSubmit(e: { preventDefault: () => void; }) {
       e.preventDefault();
       axios
-        .get(
-          `http://${process.env.VUE_APP_API_URL}:${process.env.VUE_APP_API_PORT}/api/pairstairs/`,
-          {
-            params: {
-              name: this.form.name,
-            },
-          }
+        .post(
+          `http://${process.env.VUE_APP_API_URL}:${process.env.VUE_APP_API_PORT}/api/pairmatrix/`,
+          this.form
         )
         .then((res) => {
           console.log(res);
         });
     },
+    // onSubmit(e: { preventDefault: () => void }) {
+    //   e.preventDefault();
+    //   axios
+    //     .get(
+    //       `http://${process.env.VUE_APP_API_URL}:${process.env.VUE_APP_API_PORT}/api/pairmatrix/findbyname/${this.form.name}`)
+    //     .then((res) => {
+    //       console.log(res);
+    //     });
+    // },
   },
   computed: {
     isPin() {

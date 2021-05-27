@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-    const PairStair = sequelize.define("pairstair", {
+    const PairMatrix = sequelize.define("pairmatrix", {
         id: {
             type: Sequelize.UUID,
             defaultValue: Sequelize.UUIDV4,
@@ -20,5 +20,5 @@ module.exports = (sequelize, Sequelize) => {
         }
     });
 
-    return PairStair;
+    return PairMatrix;
 };
