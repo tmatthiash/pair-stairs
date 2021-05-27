@@ -5,5 +5,5 @@ module.exports = app => {
 
     router.get("/", authenticate.isUserAuthenticated)
 
-    app.use("api/authentication", router)
+    app.use("/api/authentication", router)
 }
