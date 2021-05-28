@@ -19,7 +19,7 @@ function CheckPassword(username, password) {
 }
 
 function getMatrixByName(username) {
-  return db.user.findOne({
+  return db.pairmatrix.findOne({
     where: { name: username },
     attributes: {
       exclude: ['password']
