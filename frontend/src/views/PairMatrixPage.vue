@@ -1,8 +1,10 @@
 <template>
-  <div>
-  <div>{{ name }}</div>
-  <div>{{ pageStatus }}</div>
-  <UserLogin v-if="pageStatus === 'unauthorized'"/>
+  <div class="pair-matrix-view">
+    <div>{{pageStatus}}</div>
+    <UserLogin v-if="pageStatus === 'unauthorized'" :initialName="name"/>
+    <div v-if="pageStatus === 'authorized'">
+      LOGGGGGGGED IN
+    </div>
   </div>
 </template>
 
@@ -27,8 +29,8 @@ export default defineComponent({
         .get(
           `http://${process.env.VUE_APP_API_URL}:${process.env.VUE_APP_API_PORT}/api/authentication/`
         )
-        .then(response => {
-          this.pageStatus = "test"
+        .then((response) => {
+          this.pageStatus = "test";
           this.pageStatus =
             response.data.isUserAuthenticated === true
               ? "authorized"
@@ -49,4 +51,15 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+@import "../colors.scss";
+
+.pair-matrix-view {
+  @include color-theme("background-color", "primary-background");
+  @include color-theme("-webkit-box-shadow", "box-shadow-settings");
+  @include color-theme("box-shadow", "box-shadow-settings");
+
+  padding-top: 150px;
+  height: 100%;
+  width: 100%;
+}
 </style>

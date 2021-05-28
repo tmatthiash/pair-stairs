@@ -1,43 +1,68 @@
+/* eslint-disable no-console */
 const passport = require('passport');
-const Strategy = require('passport-local').Strategy;
+const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcrypt');
 
-const db = require("./src/models/index")
+const db = require('./src/models/index');
 
-const isPasswordValid = async (name, password) => {
-    return db.pairmatrix.findOne({ where: { name } })
-        .then(async (foundStairs) => {
-            if (foundStairs === null) {
-                throw new Error(`Stair Pair with name ${name} not found`)
-            }
-            return await bcrypt.compare(password, foundStairs.password)
-        })
-};
-
-const findPairMatrixByName = async (name) => {
-    const foundStairs = await db.pairmatrix.findOne({
-        where: { name },
-        attributes: {
-            exclude: ['password']
-        }
-    })
-    return foundStairs
+function CheckPassword(username, password) {
+    console.log("check password")
+  return db.pairmatrix.findOne({ where: { name: username } }).then(
+    (finduser) => {
+      if (finduser === null) {
+        throw new Error(`email address ${username} not found`);
+      }
+      const test = bcrypt.compareSync(password, finduser.password);
+      return test;
+    }
+  );
 }
 
-passport.use('local', new Strategy({ usernameField: 'name', passwordField: 'password' }, async (name, passport, done) => {
-    if (isPasswordValid(name, password)) {
-        return findPairMatrixByName(name);
+function getMatrixByName(username) {
+  return db.user.findOne({
+    where: { name: username },
+    attributes: {
+      exclude: ['password']
     }
-    else {
-        throw new Error(`Wrong password entered for room: ${name}`);
+  });
+}
+
+passport.use(
+  'local',
+  new LocalStrategy(
+    { usernameField: 'name', passwordField: 'password' },
+    (username, password, done) => {
+        console.log("doing auth shit")
+      const checkPassword = CheckPassword(username, password);
+
+      return checkPassword
+        .then((isLoginValid) => {
+          if (isLoginValid) {
+            return getMatrixByName(username);
+          }
+
+          throw new Error(`${username} Entered wrong password`);
+        })
+        .then((user) => {
+          console.log('User Logged In');
+          return done(null, user);
+        })
+        .catch((err) => {
+          console.log('Log in error');
+          return done(err);
+        });
     }
-}))
+  )
+);
 
 passport.serializeUser((user, done) => {
-    done(null, user.name);
+  console.log('serializing', user);
+  done(null, user.name);
 });
 
-passport.deserializeUser(async (name, done) => {
-    const pairMatrix = await findPairMatrixByName(name);
-    return done(err, pairMatrix);
+passport.deserializeUser((name, done) => {
+  console.log('de-serializing');
+  getMatrixByName(name).then((user, err) => {
+    return done(err, user);
+  });
 });
