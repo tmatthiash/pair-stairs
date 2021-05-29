@@ -1,24 +1,41 @@
 require('dotenv').config()
+const { v4: uuidv4 } = require('uuid');
+const cookieParser = require('cookie-parser');
 const passport = require('passport');
+const session = require('express-session');
 const express = require("express");
 const cors = require("cors");
 
 
 const app = express();
 
-let corsOptions = {
-    origin: "http://localhost:8081"
-};
+// let corsOptions = {
+//     origin: "http://localhost:8081"
+// };
 
-app.use(cors(corsOptions));
-app.use(express.urlencoded({
-    extended: true
-}));
-app.use(express.json());
+app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+  });
 
-app.use(express.static('static'));
-
-app.use(require('express-session')({ secret: 'keyboard cat', resave: false, saveUninitialized: false }));
+// app.use(
+//     session({
+//         genid: () => {
+//             return uuidv4();
+//         },
+//         saveUninitialized: true,
+//         resave: true,
+//         rolling: true,
+//         // TODO: add secret to env
+//         secret: 'kjdfkshdfkjxldnfue',
+//         cookie: {
+//             maxAge: 36000000,
+//             httpOnly: true,
+//             secure: true
+//         }
+//     })
+// );
 
 
 const db = require("./src/models/index")
@@ -34,26 +51,57 @@ db.sequelize.authenticate()
 // db.sequelize.sync({ force: true })
 db.sequelize.sync();
 
+app.use(cors({ origin: true, credentials: true }));
+
 app.use("/", express.static("frontend/dist"));
 app.get("/", (req, res) => {
     const path = require("path");
     res.sendFile(path.resolve("frontend/dist/index.html"));
 })
 
-app.use(passport.initialize());
-app.use(passport.session());
+// app.use(cors(corsOptions));
+app.use(express.urlencoded({
+    extended: true
+}));
+app.use(express.json());
+
+app.use(express.static('static'));
+
+app.use(cookieParser('keyboard cat'));
+
+
+app.use(session({
+    genid: () => {
+        return uuidv4();
+      },  
+    name: "pairCookie",
+    secret: 'keyboard cat',
+    resave: true,
+    saveUninitialized: true,
+    rolling: true,
+    cookie: {
+        maxAge: 9000000,
+        httpOnly: true,
+        secure: false
+    }
+}
+));
 
 require('./auth');
 
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.post('/login',
-  passport.authenticate('local'),
-  function(req, res) {
-      console.log("auth happened")
-  });
+    passport.authenticate('local'),
+    function (req, res) {
+        res.status(200).send();
+        console.log("auth happened")
+    });
+require("./src/routes/login.route")(app);
 
 // app.post('/login', loginController.login);
 require("./src/routes/pairmatrix.route")(app);
-require("./src/routes/login.route")(app);
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {

@@ -40,7 +40,8 @@ export default defineComponent({
       axios
         .post(
           `http://${process.env.VUE_APP_API_URL}:${process.env.VUE_APP_API_PORT}/login`,
-          { name: this.getName, password: this.form.password }
+          { name: this.getName, password: this.form.password },
+          { withCredentials: true }
         )
         .then((res) => console.log("response: ", res));
     },

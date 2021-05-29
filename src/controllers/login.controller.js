@@ -1,8 +1,13 @@
 const passport = require("passport");
 
 exports.isUserAuthenticated = (req, res) => {
-    console.log("Session ",req.session);
-    if (req.session.user) {
+    console.log("authenticating req ", req)
+    console.log("sessionInfo ", req.session)
+    console.log("user ", req.user);
+    // res.status(200).send();
+    // return;
+    console.log("Tha User ", req.user);
+    if (req.session.passport.user) {
         res.status(200).send({ isUserAuthenticated: true })
     } else {
         res.status(200).send({ isUserAuthenticated: false })

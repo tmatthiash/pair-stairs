@@ -31,38 +31,32 @@ passport.use(
   'local',
   new LocalStrategy(
     { usernameField: 'name', passwordField: 'password' },
-    (username, password, done) => {
+    async (username, password, done) => {
         console.log("doing auth shit")
-      const checkPassword = CheckPassword(username, password);
+      const checkPassword = await CheckPassword(username, password);
 
-      return checkPassword
-        .then((isLoginValid) => {
-          if (isLoginValid) {
-            return getMatrixByName(username);
-          }
-
-          throw new Error(`${username} Entered wrong password`);
-        })
-        .then((user) => {
-          console.log('User Logged In');
-          return done(null, user);
-        })
-        .catch((err) => {
-          console.log('Log in error');
-          return done(err);
-        });
+        if(checkPassword) {
+            return getMatrixByName(username)
+            .then((user) => {
+                console.log("returning ", user)
+                return done(null, user)
+            })
+            .catch((err) => {
+                return done(err)
+            })
+        }
     }
   )
 );
 
 passport.serializeUser((user, done) => {
-  console.log('serializing', user);
+  console.log('serializing', user.name);
   done(null, user.name);
 });
 
-passport.deserializeUser((name, done) => {
-  console.log('de-serializing');
-  getMatrixByName(name).then((user, err) => {
+passport.deserializeUser((user, done) => {
+  console.log('de-serializing', user);
+  getMatrixByName(user).then((user, err) => {
     return done(err, user);
   });
 });

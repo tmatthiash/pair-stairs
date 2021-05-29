@@ -6,6 +6,16 @@
   <router-view />
 </template>
 
+<script lang="ts">
+import { defineComponent } from "vue";
+import axios from 'axios';
+
+axios.defaults.withCredentials = true;
+export default defineComponent({
+  name: "App",
+});
+</script>
+
 <style lang="scss">
 #app {
   font-family: "Nunito Sans", Avenir, Helvetica, Arial, sans-serif;
