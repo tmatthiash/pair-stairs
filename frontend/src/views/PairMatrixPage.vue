@@ -1,9 +1,14 @@
 <template>
   <div class="pair-matrix-view">
-    <div>{{pageStatus}}</div>
-    <UserLogin v-if="pageStatus === 'unauthorized'" :initialName="name"/>
+    <div>{{ pageStatus }}</div>
+    <UserLogin
+      @pageStatusChange="pageStatusChange"
+      v-if="pageStatus === 'unauthorized'"
+      :initialName="name"
+      :setAuthenticationStatus="setAuthenticationStatus"
+    />
     <div v-if="pageStatus === 'authorized'">
-      LOGGGGGGGED IN
+      <matrix-holder />
     </div>
   </div>
 </template>
@@ -12,6 +17,7 @@
 import { defineComponent } from "vue";
 import axios from "axios";
 import UserLogin from "../components/UserLogin/UserLogin.vue";
+import MatrixHolder from "../components/matrixPageParts/MatrixHolder.vue";
 
 export default defineComponent({
   name: "PairMatrixPage",
@@ -22,6 +28,7 @@ export default defineComponent({
   },
   components: {
     UserLogin,
+    MatrixHolder,
   },
   methods: {
     getAuthenticationStatus() {
@@ -30,12 +37,19 @@ export default defineComponent({
           `http://${process.env.VUE_APP_API_URL}:${process.env.VUE_APP_API_PORT}/api/authentication/`
         )
         .then((response) => {
-          this.pageStatus = "test";
+          console.log("got response ", response.data);
           this.pageStatus =
             response.data.isUserAuthenticated === true
               ? "authorized"
               : "unauthorized";
         });
+    },
+    pageStatusChange(newStatus: string) {
+      console.log("got Status change of, ", newStatus);
+      this.pageStatus = newStatus;
+    },
+    setAuthenticationStatus(newStatus: string) {
+      this.pageStatus = newStatus;
     },
   },
   created() {

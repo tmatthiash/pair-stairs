@@ -43,7 +43,15 @@ export default defineComponent({
           { name: this.getName, password: this.form.password },
           { withCredentials: true }
         )
-        .then((res) => console.log("response: ", res));
+        .then((res) => {
+            console.log("auth response ", res.data)
+          this.onStatusChange(
+            res.data.isUserAuthenticated ? "authorized" : "unauthorized"
+          );
+        });
+    },
+    onStatusChange(newStatus: string) {
+      this.$emit("pageStatusChange", newStatus);
     },
   },
   props: {

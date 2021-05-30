@@ -1,18 +1,33 @@
 const passport = require("passport");
+const { user } = require("../models");
 
 exports.isUserAuthenticated = (req, res) => {
-    console.log("authenticating req ", req)
-    console.log("sessionInfo ", req.session)
-    console.log("user ", req.user);
-    // res.status(200).send();
-    // return;
-    console.log("Tha User ", req.user);
+    if(!req.session){
+        return res.status(200).send({ isUserAuthenticated: false })
+    }
+    if(!req.session.passport){
+        return res.status(200).send({ isUserAuthenticated: false })
+    }
     if (req.session.passport.user) {
-        res.status(200).send({ isUserAuthenticated: true })
+        return res.status(200).send({ isUserAuthenticated: true })
     } else {
-        res.status(200).send({ isUserAuthenticated: false })
+        return res.status(200).send({ isUserAuthenticated: false })
     }
 }
+
+
+exports.login = (req, res, next) => {
+    passport.authenticate('local', (err, user) => {
+      if (err) {
+        saveError(null, req.ip, 1, err.message);
+        return res
+          .status(400)
+          .send({ errorMessage: 'Invalid email or password' });
+      }
+      return res.status(200).send();
+    })(req, res, next);
+  };
+  
 
 
 

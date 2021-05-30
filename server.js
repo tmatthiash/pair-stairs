@@ -3,6 +3,7 @@ const { v4: uuidv4 } = require('uuid');
 const cookieParser = require('cookie-parser');
 const passport = require('passport');
 const session = require('express-session');
+const loginController = require('./src/controllers/login.controller')
 const express = require("express");
 const cors = require("cors");
 
@@ -92,12 +93,15 @@ require('./auth');
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.post('/login',
-    passport.authenticate('local'),
-    function (req, res) {
-        res.status(200).send();
-        console.log("auth happened")
-    });
+// app.post('/login',
+//     passport.authenticate('local'),
+//     function (req, res) {
+//         res.status(200).send();
+//         console.log("auth happened")
+//     });
+
+app.post('/login', loginController.login);
+
 require("./src/routes/login.route")(app);
 
 // app.post('/login', loginController.login);
