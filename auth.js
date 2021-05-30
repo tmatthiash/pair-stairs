@@ -6,7 +6,6 @@ const bcrypt = require('bcrypt');
 const db = require('./src/models/index');
 
 function CheckPassword(username, password) {
-    console.log("check password")
   return db.pairmatrix.findOne({ where: { name: username } }).then(
     (finduser) => {
       if (finduser === null) {
@@ -32,30 +31,29 @@ passport.use(
   new LocalStrategy(
     { usernameField: 'name', passwordField: 'password' },
     async (username, password, done) => {
-        console.log("doing auth shit")
       const checkPassword = await CheckPassword(username, password);
 
         if(checkPassword) {
             return getMatrixByName(username)
             .then((user) => {
-                console.log("returning ", user)
                 return done(null, user)
             })
             .catch((err) => {
                 return done(err)
             })
         }
+        else {
+            return done(null);
+        }
     }
   )
 );
 
 passport.serializeUser((user, done) => {
-  console.log('serializing', user.name);
   done(null, user.name);
 });
 
 passport.deserializeUser((user, done) => {
-  console.log('de-serializing', user);
   getMatrixByName(user).then((user, err) => {
     return done(err, user);
   });

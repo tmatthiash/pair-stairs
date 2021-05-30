@@ -2,6 +2,7 @@ const passport = require("passport");
 const { user } = require("../models");
 
 exports.isUserAuthenticated = (req, res) => {
+    console.log(req.session)
     if(!req.session){
         return res.status(200).send({ isUserAuthenticated: false })
     }
@@ -19,9 +20,8 @@ exports.isUserAuthenticated = (req, res) => {
 exports.login = (req, res, next) => {
     passport.authenticate('local', (err, user) => {
       if (err) {
-        saveError(null, req.ip, 1, err.message);
         return res
-          .status(400)
+          .status(401)
           .send({ errorMessage: 'Invalid email or password' });
       }
       return res.status(200).send();

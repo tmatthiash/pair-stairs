@@ -6,6 +6,9 @@
         <div>{{ getName }}</div>
         <input class="user-login-form-input" v-model="form.password" />
         <button class="user-login-form-submit">Submit</button>
+        <div class="user-login-form-error" v-if="badLoginOccured">
+          Name / Password was incorrect
+        </div>
       </form>
     </div>
   </div>
@@ -23,6 +26,7 @@ export default defineComponent({
         name: "",
         password: "",
       },
+      badLoginOccured: false,
     };
   },
   computed: {
@@ -35,7 +39,6 @@ export default defineComponent({
   },
   methods: {
     onSubmitLogin(e: { preventDefault: () => void }) {
-      console.log("here");
       e.preventDefault();
       axios
         .post(
@@ -44,10 +47,13 @@ export default defineComponent({
           { withCredentials: true }
         )
         .then((res) => {
-            console.log("auth response ", res.data)
           this.onStatusChange(
-            res.data.isUserAuthenticated ? "authorized" : "unauthorized"
+            res.data.success ? "authorized" : "unauthorized"
           );
+        }).catch((err) => {
+            if(err.response.status === 401){
+                this.badLoginOccured = true;
+            };
         });
     },
     onStatusChange(newStatus: string) {

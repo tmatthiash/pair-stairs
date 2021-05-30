@@ -18,7 +18,7 @@ app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
-  });
+});
 
 // app.use(
 //     session({
@@ -74,7 +74,7 @@ app.use(cookieParser('keyboard cat'));
 app.use(session({
     genid: () => {
         return uuidv4();
-      },  
+    },
     name: "pairCookie",
     secret: 'keyboard cat',
     resave: true,
@@ -94,13 +94,31 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // app.post('/login',
-//     passport.authenticate('local'),
+//     passport.authenticate('local', {failWithError:}),
 //     function (req, res) {
 //         res.status(200).send();
 //         console.log("auth happened")
 //     });
 
-app.post('/login', loginController.login);
+app.post('/login', function (req, res, next) {
+    passport.authenticate('local', function (err, user, info) {
+        if (err) {
+            return next(err);
+        }
+        if (!user) {
+            return res.status(401).send({ success: false, message: 'authentication failed' });
+        }
+        req.login(user, loginErr => {
+            if (loginErr) {
+                return next(loginErr);
+            }
+            return res.send({ success: true, message: 'authentication succeeded' });
+        });
+    })(req, res, next);
+});
+
+
+// app.post('/login', loginController.login);
 
 require("./src/routes/login.route")(app);
 
