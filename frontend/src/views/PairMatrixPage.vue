@@ -1,6 +1,5 @@
 <template>
   <div class="pair-matrix-view">
-    <div>{{ pageStatus }}</div>
     <UserLogin
       @pageStatusChange="pageStatusChange"
       v-if="pageStatus === 'unauthorized'"
@@ -8,7 +7,7 @@
       :setAuthenticationStatus="setAuthenticationStatus"
     />
     <div v-if="pageStatus === 'authorized'">
-      <matrix-holder />
+      <matrix-holder :matrixName="name"/>
     </div>
   </div>
 </template>

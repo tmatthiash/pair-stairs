@@ -3,7 +3,6 @@
     <div v-if="initialName !== ''" class="user-login-form__unauthorized">
       <form @submit="onSubmitLogin" class="user-login-form-contents">
         <input class="user-login-form-input" v-model="getName" />
-        <div>{{ getName }}</div>
         <input class="user-login-form-input" v-model="form.password" />
         <button class="user-login-form-submit">Submit</button>
         <div class="user-login-form-error" v-if="badLoginOccured">
@@ -47,13 +46,12 @@ export default defineComponent({
           { withCredentials: true }
         )
         .then((res) => {
-          this.onStatusChange(
-            res.data.success ? "authorized" : "unauthorized"
-          );
-        }).catch((err) => {
-            if(err.response.status === 401){
-                this.badLoginOccured = true;
-            };
+          this.onStatusChange(res.data.success ? "authorized" : "unauthorized");
+        })
+        .catch((err) => {
+          if (err.response.status === 401) {
+            this.badLoginOccured = true;
+          }
         });
     },
     onStatusChange(newStatus: string) {
@@ -67,4 +65,7 @@ export default defineComponent({
 </script>
 
 <style lang="sass" scoped>
+.user-login-form-contents
+  display: flex
+  flex-direction: column
 </style>

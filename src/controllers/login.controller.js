@@ -1,5 +1,4 @@
 const passport = require("passport");
-const { user } = require("../models");
 
 exports.isUserAuthenticated = (req, res) => {
     console.log(req.session)

@@ -25,6 +25,10 @@ export default defineComponent({
   color: #2c3e50;
 }
 
+*:focus {
+  outline: none;
+}
+
 #nav {
   padding: 30px;
 

@@ -3,7 +3,6 @@ const bcrypt = require('bcrypt');
 const connectEnsureLogin = require('connect-ensure-login')
 const db = require("../models");
 const PairMatrix = db.pairmatrix;
-const Op = db.Sequelize.Op;
 
 
 exports.create = async (req, res) => {
