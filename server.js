@@ -3,41 +3,17 @@ const { v4: uuidv4 } = require('uuid');
 const cookieParser = require('cookie-parser');
 const passport = require('passport');
 const session = require('express-session');
-const loginController = require('./src/controllers/login.controller')
 const express = require("express");
 const cors = require("cors");
 
 
 const app = express();
 
-// let corsOptions = {
-//     origin: "http://localhost:8081"
-// };
-
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
 });
-
-// app.use(
-//     session({
-//         genid: () => {
-//             return uuidv4();
-//         },
-//         saveUninitialized: true,
-//         resave: true,
-//         rolling: true,
-//         // TODO: add secret to env
-//         secret: 'kjdfkshdfkjxldnfue',
-//         cookie: {
-//             maxAge: 36000000,
-//             httpOnly: true,
-//             secure: true
-//         }
-//     })
-// );
-
 
 const db = require("./src/models/index")
 
@@ -49,7 +25,6 @@ db.sequelize.authenticate()
         console.log("***Failure***");
     })
 
-// db.sequelize.sync({ force: true })
 db.sequelize.sync();
 
 app.use(cors({ origin: true, credentials: true }));
@@ -60,7 +35,6 @@ app.get("/", (req, res) => {
     res.sendFile(path.resolve("frontend/dist/index.html"));
 })
 
-// app.use(cors(corsOptions));
 app.use(express.urlencoded({
     extended: true
 }));
@@ -70,8 +44,7 @@ app.use(express.static('static'));
 
 app.use(cookieParser('keyboard cat'));
 
-
-app.use(session({
+const sessionMiddleware = session({
     genid: () => {
         return uuidv4();
     },
@@ -85,20 +58,15 @@ app.use(session({
         httpOnly: true,
         secure: false
     }
-}
-));
+});
+
+app.use(sessionMiddleware);
 
 require('./auth');
 
 app.use(passport.initialize());
 app.use(passport.session());
 
-// app.post('/login',
-//     passport.authenticate('local', {failWithError:}),
-//     function (req, res) {
-//         res.status(200).send();
-//         console.log("auth happened")
-//     });
 
 app.post('/login', function (req, res, next) {
     passport.authenticate('local', function (err, user, info) {
@@ -117,15 +85,45 @@ app.post('/login', function (req, res, next) {
     })(req, res, next);
 });
 
-
-// app.post('/login', loginController.login);
-
 require("./src/routes/login.route")(app);
-
-// app.post('/login', loginController.login);
 require("./src/routes/pairmatrix.route")(app);
 
+const server = require('http').createServer(app);
+
+const io = require("socket.io")(server, {
+    cors: {
+        origin: "http://localhost:8081",
+        methods: ["GET", "POST", "PUSH"]
+    }
+});
+
+const wrap = middleware => (socket, next) => middleware(socket.request, {}, next);
+
+io.use(wrap(sessionMiddleware));
+io.use(wrap(passport.initialize()));
+io.use(wrap(passport.session()));
+
+
+
+io.use((socket, next) => {
+    if (socket.request) {
+        next();
+    } else {
+        next(new Error('unauthorized'))
+    }
+});
+
+
+
+require("./src/socketControllers/pairmatrix.socket")(io);
+
+
 const PORT = process.env.PORT || 8080;
-app.listen(PORT, () => {
-    console.log(`App listening on port ${PORT}`)
-})
+// app.listen(PORT, () => {
+//     console.log(`App listening on port ${PORT}`)
+// })
+// const http = require('http').Server(app);
+
+server.listen(PORT, function () {
+    console.log(`listening on ${PORT}`);
+});

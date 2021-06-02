@@ -16,6 +16,7 @@
 <script lang="ts">
 import { defineComponent } from "@vue/runtime-core";
 import axios from "axios";
+import io from "socket.io"
 
 export default defineComponent({
   name: "UserLogin",
@@ -65,6 +66,11 @@ export default defineComponent({
 </script>
 
 <style lang="sass" scoped>
+.user-login
+  width: 50%
+  margin-left: auto
+  margin-right: auto
+
 .user-login-form-contents
   display: flex
   flex-direction: column

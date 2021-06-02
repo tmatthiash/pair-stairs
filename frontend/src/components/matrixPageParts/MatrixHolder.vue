@@ -4,35 +4,44 @@
     <div class="matrix-parts-page">
       <button class="matrix-parts-holder-tab">Users</button>
       <button class="matrix-parts-holder-tab">Stair Matrix</button>
-      <div class="matrix-parts-holder-contents">
-        <user-manager :matrixName="matrixName" />
-      </div>
+      <div class="matrix-parts-holder-contents"></div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import UserManager from "../UserManager/UserManager.vue";
+import io from "socket.io-client";
 
 export default defineComponent({
-  components: { UserManager },
+  components: {},
   name: "MatrixHolder",
   data() {
     return {
       userList: [],
+      socket: io(
+        `${process.env.VUE_APP_API_URL}:${process.env.VUE_APP_API_PORT}`
+      ),
     };
   },
-  props: {
-    matrixName: {
-      type: String,
-      default: "",
+  props: ["matrixName"],
+  methods: {
+    joinSocket() {
+      console.log("joining ", this.getName());
+      this.socket.emit("join", this.getName());
+      this.socket.emit("join", { matrixName: this.getName() });
+    },
+    getName() {
+      return this.matrixName;
     },
   },
-  methods: {
-    getUserList() {
-      console.log("todo");
-    },
+  mounted() {
+    this.joinSocket();
+    this.socket.on("UPDATE_MATRIX_INFO", (data) => {
+      console.log("got data ", data);
+      this.$store.commit("setPairMatrix", data.pairMatrix);
+      this.$store.commit("setUserList", data.users);
+    });
   },
 });
 </script>

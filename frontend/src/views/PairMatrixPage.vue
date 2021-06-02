@@ -7,7 +7,7 @@
       :setAuthenticationStatus="setAuthenticationStatus"
     />
     <div v-if="pageStatus === 'authorized'">
-      <matrix-holder :matrixName="name"/>
+      <matrix-holder :matrixName="name" />
     </div>
   </div>
 </template>
