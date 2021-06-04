@@ -12,7 +12,6 @@ exports = module.exports = async (io) => {
                 return;
             }
             const { matrixName } = data;
-            console.log("trying to do stuff with, ", matrixName)
             socket.join(matrixName);
             const foundMatrix = await db.pairmatrix.findOne({
                 where: { name: matrixName },

@@ -15,7 +15,7 @@ const routes: Array<RouteRecordRaw> = [
     component: NewStair,
   },
   {
-    path: "/pairmatrix/:name",
+    path: "/pairmatrix/:matrixName",
     name: "PairMatrix",
     component: PairMatrixPage,
     props: true

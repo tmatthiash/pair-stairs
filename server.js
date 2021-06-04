@@ -103,8 +103,6 @@ io.use(wrap(sessionMiddleware));
 io.use(wrap(passport.initialize()));
 io.use(wrap(passport.session()));
 
-
-
 io.use((socket, next) => {
     if (socket.request) {
         next();
@@ -116,6 +114,7 @@ io.use((socket, next) => {
 
 
 require("./src/socketControllers/pairmatrix.socket")(io);
+require("./src/socketControllers/user.socket")(io);
 
 
 const PORT = process.env.PORT || 8080;

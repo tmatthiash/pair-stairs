@@ -3,11 +3,11 @@
     <UserLogin
       @pageStatusChange="pageStatusChange"
       v-if="pageStatus === 'unauthorized'"
-      :initialName="name"
+      :initialName="matrixName"
       :setAuthenticationStatus="setAuthenticationStatus"
     />
     <div v-if="pageStatus === 'authorized'">
-      <matrix-holder :matrixName="name" />
+      <matrix-holder :matrixName="matrixName" />
     </div>
   </div>
 </template>
@@ -55,7 +55,7 @@ export default defineComponent({
     this.getAuthenticationStatus();
   },
   props: {
-    name: {
+    matrixName: {
       type: String,
       default: "",
     },

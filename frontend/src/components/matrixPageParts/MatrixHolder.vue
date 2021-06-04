@@ -4,7 +4,9 @@
     <div class="matrix-parts-page">
       <button class="matrix-parts-holder-tab">Users</button>
       <button class="matrix-parts-holder-tab">Stair Matrix</button>
-      <div class="matrix-parts-holder-contents"></div>
+      <div class="matrix-parts-holder-contents">
+        <user-manager v-if="selectedTab === 'Users'" />
+      </div>
     </div>
   </div>
 </template>
@@ -12,23 +14,25 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import io from "socket.io-client";
+import UserManager from "../UserManager/UserManager.vue";
+import { MutationTypes } from "../../store/MutationTypes";
 
 export default defineComponent({
-  components: {},
+  components: UserManager,
   name: "MatrixHolder",
   data() {
     return {
-      userList: [],
       socket: io(
         `${process.env.VUE_APP_API_URL}:${process.env.VUE_APP_API_PORT}`
       ),
+      selectedTab: "Users",
     };
   },
   props: ["matrixName"],
   methods: {
     joinSocket() {
       console.log("joining ", this.getName());
-      this.socket.emit("join", this.getName());
+      // this.socket.emit("join", this.getName());
       this.socket.emit("join", { matrixName: this.getName() });
     },
     getName() {
@@ -39,8 +43,8 @@ export default defineComponent({
     this.joinSocket();
     this.socket.on("UPDATE_MATRIX_INFO", (data) => {
       console.log("got data ", data);
-      this.$store.commit("setPairMatrix", data.pairMatrix);
-      this.$store.commit("setUserList", data.users);
+      this.$store.commit(MutationTypes.SET_PAIR_MATRIX, data.pairMatrix);
+      this.$store.commit(MutationTypes.SET_USER_LIST, data.users);
     });
   },
 });

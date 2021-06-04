@@ -1,22 +1,9 @@
 const connectEnsureLogin = require('connect-ensure-login')
 
 const db = require("../models");
-const User = db.user;
 const PairMatrix = db.pairmatrix;
-
-// exports.getUsersForMatrix = connectEnsureLogin.ensureLoggedIn(),
-//     async (req, res) => {
-//         const name = req.params.name;
-//         const foundMatrix = await PairMatrix.findOne({
-//             where: { name }
-//         })
-//         const userArray = await User.findAll({
-//             where: {
-//                 pairmatrixId= foundMatrix.id
-//             }
-//         });
-//         res.send({ userArray })
-//     };
+const User = db.user;
+// const PairMatrix = db.pairmatrix;
 
 exports.getUsersByMatrixId = connectEnsureLogin.ensureLoggedIn(), async (matrixId) => {
     const userArray = await User.findAll({
@@ -25,4 +12,22 @@ exports.getUsersByMatrixId = connectEnsureLogin.ensureLoggedIn(), async (matrixI
         }
     });
     return userArray;
+}
+
+exports.create = connectEnsureLogin.ensureLoggedIn(), (req, res) => {
+    PairMatrix.findOne({
+        where: { name: req.session.passport.user }
+    }).then((foundMatrix) => {
+        const newUser ={
+            name:req.params.userName,
+            pairmatrixId: foundMatrix.id
+        }
+        this.getUsersByMatrixId.create(newUser)
+        .then((data) => {
+            res.status(201).send();
+        })
+        .catch((err) => {
+            res.status(500).send();
+        })
+    })
 }
