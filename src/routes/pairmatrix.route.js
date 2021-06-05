@@ -1,4 +1,3 @@
-const connectEnsureLogin = require('connect-ensure-login')
 
 module.exports = app => {
     const pairmatrix = require("../controllers/pairmatrix.controller.js");

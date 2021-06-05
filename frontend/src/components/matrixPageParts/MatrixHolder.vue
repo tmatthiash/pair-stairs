@@ -5,7 +5,7 @@
       <button class="matrix-parts-holder-tab">Users</button>
       <button class="matrix-parts-holder-tab">Stair Matrix</button>
       <div class="matrix-parts-holder-contents">
-        <user-manager v-if="selectedTab === 'Users'" />
+        <user-manager />
       </div>
     </div>
   </div>
@@ -14,11 +14,11 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import io from "socket.io-client";
-import UserManager from "../UserManager/UserManager.vue";
 import { MutationTypes } from "../../store/MutationTypes";
+import UserManager from "../UserManager/UserManager.vue";
 
 export default defineComponent({
-  components: UserManager,
+  components: { UserManager },
   name: "MatrixHolder",
   data() {
     return {
@@ -45,6 +45,10 @@ export default defineComponent({
       console.log("got data ", data);
       this.$store.commit(MutationTypes.SET_PAIR_MATRIX, data.pairMatrix);
       this.$store.commit(MutationTypes.SET_USER_LIST, data.users);
+    });
+    this.socket.on("SET_USER_LIST", (data) => {
+      console.log("got users ", data);
+      this.$store.commit(MutationTypes.SET_USER_LIST, data);
     });
   },
 });

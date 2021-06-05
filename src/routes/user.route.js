@@ -1,12 +1,14 @@
 
 module.exports = app => {
-    const users = require("../controllers/user.controller")
+    const user = require("../controllers/user.controller")
 
     var router = require("express").Router();
   
-    router.get("/:name", users.getUsersForMatrix)
+    // router.get("/:name", users.getUsersForMatrix)
 
-    router.get("/create/", users.create)
+    router.post("/create/", user.create)
+
+    router.get("/create/", user.test);
   
     app.use('/api/user', router);
   };

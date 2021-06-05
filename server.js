@@ -35,14 +35,14 @@ app.get("/", (req, res) => {
     res.sendFile(path.resolve("frontend/dist/index.html"));
 })
 
-app.use(express.urlencoded({
-    extended: true
-}));
-app.use(express.json());
-
 app.use(express.static('static'));
 
 app.use(cookieParser('keyboard cat'));
+
+app.use(express.json());
+app.use(express.urlencoded({
+    extended: true
+}));
 
 const sessionMiddleware = session({
     genid: () => {
@@ -50,7 +50,7 @@ const sessionMiddleware = session({
     },
     name: "pairCookie",
     secret: 'keyboard cat',
-    resave: true,
+    resave: false,
     saveUninitialized: true,
     rolling: true,
     cookie: {
@@ -85,6 +85,7 @@ app.post('/login', function (req, res, next) {
     })(req, res, next);
 });
 
+require("./src/routes/user.route")(app);
 require("./src/routes/login.route")(app);
 require("./src/routes/pairmatrix.route")(app);
 
@@ -97,19 +98,21 @@ const io = require("socket.io")(server, {
     }
 });
 
-const wrap = middleware => (socket, next) => middleware(socket.request, {}, next);
+// const wrap = middleware => (socket, next) => middleware(socket.request, {}, next);
 
-io.use(wrap(sessionMiddleware));
-io.use(wrap(passport.initialize()));
-io.use(wrap(passport.session()));
+// io.use(wrap(sessionMiddleware));
+// io.use(wrap(passport.initialize()));
+// io.use(wrap(passport.session()));
 
-io.use((socket, next) => {
-    if (socket.request) {
-        next();
-    } else {
-        next(new Error('unauthorized'))
-    }
-});
+// io.use((socket, next) => {
+//     console.log("checking basic auth for all sockets ", socket.request.sessionStore)
+//     if (socket.request.user) {
+//         next();
+//     } else {
+//         console.log("auth error")
+//         next(new Error('unauthorized'))
+//     }
+// });
 
 
 
@@ -118,10 +121,6 @@ require("./src/socketControllers/user.socket")(io);
 
 
 const PORT = process.env.PORT || 8080;
-// app.listen(PORT, () => {
-//     console.log(`App listening on port ${PORT}`)
-// })
-// const http = require('http').Server(app);
 
 server.listen(PORT, function () {
     console.log(`listening on ${PORT}`);

@@ -13,6 +13,7 @@ export const mutations: MutationTree<State> & Mutations = {
     state.pairMatrix = payload
   },
   [MutationTypes.SET_USER_LIST](state, payload: any) {
+    console.log("in set user lsit", payload)
     state.userList = payload
   },
 }

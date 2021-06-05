@@ -26,6 +26,7 @@ exports = module.exports = async (io) => {
                 pairMatrix: foundMatrix,
                 users: foundUsers
             }
+            console.log("sending back matrix ", matrixData)
             io.to(matrixName).emit("UPDATE_MATRIX_INFO", matrixData);
         })
     })

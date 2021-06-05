@@ -5,7 +5,7 @@ const PairMatrix = db.pairmatrix;
 const User = db.user;
 // const PairMatrix = db.pairmatrix;
 
-exports.getUsersByMatrixId = connectEnsureLogin.ensureLoggedIn(), async (matrixId) => {
+exports.getUsersByMatrixId = async (matrixId) => {
     const userArray = await User.findAll({
         where: {
             pairmatrixId: matrixId
@@ -14,20 +14,24 @@ exports.getUsersByMatrixId = connectEnsureLogin.ensureLoggedIn(), async (matrixI
     return userArray;
 }
 
-exports.create = connectEnsureLogin.ensureLoggedIn(), (req, res) => {
+exports.create = (req, res) => {
     PairMatrix.findOne({
         where: { name: req.session.passport.user }
     }).then((foundMatrix) => {
-        const newUser ={
-            name:req.params.userName,
+        const newUser = {
+            name: req.body.userName,
             pairmatrixId: foundMatrix.id
         }
-        this.getUsersByMatrixId.create(newUser)
-        .then((data) => {
-            res.status(201).send();
-        })
-        .catch((err) => {
-            res.status(500).send();
-        })
+        User.create(newUser)
+            .then((data) => {
+                res.status(201).send();
+            })
+            .catch((err) => {
+                res.status(500).send();
+            })
     })
+}
+
+exports.test = (res, req) => {
+    res.send("success")
 }
