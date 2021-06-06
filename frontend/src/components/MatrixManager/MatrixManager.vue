@@ -8,7 +8,10 @@
       <div class="matrix-manager-y-labels">{{ userY.name }}</div>
       <div v-for="(userX, indexX) in getUserList()" :key="indexX">
         <div class="matrix-manager-cell" v-if="indexY - indexX > 0">
-          {{ indexY - indexX }}
+          <!-- {{ indexY - indexX }} -->
+          <!-- {{ userX.name }}
+          {{ userY.name }} -->
+          <matrix-cell :user1Id="userX.id" :user2Id="userY.id" />
         </div>
       </div>
     </div>
@@ -27,11 +30,13 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import MatrixCell from "./MatrixCell/MatrixCell.vue";
 // import io from "socket.io-client";
 // import { MutationTypes } from "../../store/MutationTypes";
 
 export default defineComponent({
   name: "MatrixManager",
+  components: { MatrixCell },
   methods: {
     getUserList() {
       if (this.$store.state.userList) {
