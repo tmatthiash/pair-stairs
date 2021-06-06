@@ -9,8 +9,10 @@ exports = module.exports = async (io) => {
                     pairmatrixId: data.id
                 }
             })
-            console.log("emitting this many users ", matrixUsers.length)
-            io.to(data.name).emit("SET_USER_LIST", matrixUsers);
+            const sortedUsers = matrixUsers.sort((a, b) => a.name < b.name === true ? -1 : 1)
+
+            console.log("sorted users", sortedUsers)
+            io.to(data.name).emit("SET_USER_LIST", sortedUsers);
         })
     })
 }

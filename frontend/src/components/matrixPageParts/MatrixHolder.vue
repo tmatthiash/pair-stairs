@@ -2,10 +2,15 @@
   <div>
     <h2>Pair Stairs for team whatever</h2>
     <div class="matrix-parts-page">
-      <button class="matrix-parts-holder-tab">Users</button>
-      <button class="matrix-parts-holder-tab">Stair Matrix</button>
+      <button class="matrix-parts-holder-tab" @click="selectedTab='Users'">
+        Users
+      </button>
+      <button class="matrix-parts-holder-tab" @click="selectedTab = 'Matrix'">
+        Stair Matrix
+      </button>
       <div class="matrix-parts-holder-contents">
-        <user-manager />
+        <user-manager v-if="selectedTab === 'Users'"/>
+        <matrix-manager v-if="selectedTab === 'Matrix'"/>
       </div>
     </div>
   </div>
@@ -16,9 +21,10 @@ import { defineComponent } from "vue";
 import io from "socket.io-client";
 import { MutationTypes } from "../../store/MutationTypes";
 import UserManager from "../UserManager/UserManager.vue";
+import MatrixManager from "../MatrixManager/MatrixManager.vue";
 
 export default defineComponent({
-  components: { UserManager },
+  components: { UserManager, MatrixManager },
   name: "MatrixHolder",
   data() {
     return {

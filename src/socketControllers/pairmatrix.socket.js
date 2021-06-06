@@ -22,11 +22,11 @@ exports = module.exports = async (io) => {
             const foundUsers = await db.user.findAll({
                 where: { pairmatrixId: foundMatrix.id }
             })
+            const sortedUsers = foundUsers.sort((a, b) => a.name < b.name === true ? -1 : 1)
             const matrixData = {
                 pairMatrix: foundMatrix,
-                users: foundUsers
+                users: sortedUsers
             }
-            console.log("sending back matrix ", matrixData)
             io.to(matrixName).emit("UPDATE_MATRIX_INFO", matrixData);
         })
     })
