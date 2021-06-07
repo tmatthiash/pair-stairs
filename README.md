@@ -1,4 +1,32 @@
-## Instructions to startup
+## Pre-setup
+
+### Database setup
+
+First thing is that you need mysql server running on your machine on the default port. Keep in mind the connection info (user/password/host location)
+
+Create a database on the server
+
+`mysql -u root -p`
+
+`create database pick_a_database_name;`
+
+Now create a .env file in the root directory, it'll need the following attributes
+
+    DB_HOST=localhost
+
+    DB_USER=name (good chance this is root)
+
+    DB_PASS=a_password_you_setup
+
+    DB_NAME=db_name  (The one you created in the last step)
+
+Create a 2nd .env file IN THE /FRONTEND DIRECTORY
+
+    VUE_APP_API_URL=localhost
+
+    VUE_APP_API_PORT=8080
+
+## Instructions to startup (assuming starting in root dir)
 1.  CD to /frontend
 `cd frontend`
 2. Build the webpack files
