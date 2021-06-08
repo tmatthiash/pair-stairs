@@ -70,10 +70,39 @@ export default defineComponent({
   border: 1px solid;
 }
 .matrix-cell__selected {
-  @include color-theme("border-color", "red");
-
-  border: 4px solid;
+  animation: matrix-cell-pulse 1.5s infinite;
 }
 
-
+@keyframes matrix-cell-pulse {
+  0% {
+    -moz-box-shadow: inset 0px 0px 8px 0px #24ff0d;
+    box-shadow: inset 0px 0px 8px 0px #24ff0d;
+  }
+  33% {
+    -moz-box-shadow: inset 0px 0px 8px 1.5px #24ff0d;
+    box-shadow: inset 0px 0px 8px 1.5px #24ff0d;
+  }
+  66% {
+    -moz-box-shadow: inset 0px 0px 8px 3px #24ff0d;
+    box-shadow: inset 0px 0px 8px 3px #24ff0d;
+  }
+  100% {
+    -moz-box-shadow: inset 0px 0px 8px 1.5px #24ff0d;
+    box-shadow: inset 0px 0px 8px 1.5px #24ff0d;
+  }
+}
+@-webkit-keyframes matrix-cell-pulse {
+  0% {
+    -webkit-box-shadow: inset 0px 0px 8px 0px #24ff0d;
+  }
+  33% {
+    -webkit-box-shadow: inset 0px 0px 8px 1.5px #24ff0d;
+  }
+  66% {
+    -webkit-box-shadow: inset 0px 0px 8px 3px #24ff0d;
+  }
+  100% {
+    -webkit-box-shadow: inset 0px 0px 8px 1.5px #24ff0d;
+  }
+}
 </style>

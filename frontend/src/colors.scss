@@ -8,7 +8,10 @@ $themes: (
             primary-accent: #0d2c54,
             primary-border: #fff,
             primary-accent-text: #fff,
-            box-shadow-settings: inset 0px 0px 130px 148px #FF9F0B
+            box-shadow-settings: inset 0px 0px 130px 148px #FF9F0B,
+            selected-pulse-shadow-none: inset 0px 0px 8px 0px #24ff0d,
+            selected-pulse-shadow-half: inset 0px 0px 8px 1.5px #24ff0d,
+            selected-pulse-shadow-full: inset 0px 0px 8px 3px #24ff0d
 
     ),
     emily: (
