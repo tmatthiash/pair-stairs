@@ -5,3 +5,7 @@ export interface PairSet {
     userIdList: string[],
     pairMatrixId: string,
 }
+
+export interface SelectedPairSet {
+    list: string[]
+}

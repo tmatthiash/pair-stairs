@@ -1,10 +1,17 @@
 <template>
-  <div class="matrix-cell">{{ getPairSet }}</div>
+  <div
+    class="matrix-cell"
+    @click="toggleSelected"
+    v-bind:class="{ 'matrix-cell__selected': isPairSelected }"
+  >
+    {{ getPairSet }}
+  </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
 import { PairSet } from "../../../types/PairSet";
+import { MutationTypes } from "../../../store/MutationTypes";
 
 export default defineComponent({
   name: "MatrixCell",
@@ -19,6 +26,33 @@ export default defineComponent({
         );
       });
       return foundPairSet[0]?.date || "N/A";
+    },
+    isPairSelected(): boolean {
+      const { selectedPairs } = this.$store.state;
+      const foundPairMatch = selectedPairs.filter((pair: string[]) => {
+        return pair.includes(this.user1Id) && pair.includes(this.user2Id);
+      });
+      console.log("found pair match", foundPairMatch);
+      return foundPairMatch.length > 0 ? true : false;
+    },
+  },
+  methods: {
+    toggleSelected() {
+      const { selectedPairs } = this.$store.state;
+      let newSelectedPairList = [];
+      if (this.isPairSelected) {
+        newSelectedPairList = selectedPairs.filter((pair: string[]) => {
+          return !(pair.includes(this.user1Id) && pair.includes(this.user2Id));
+        });
+      } else {
+        console.log("ids ", this.user1Id, this.user2Id);
+        newSelectedPairList = [...selectedPairs, [this.user1Id, this.user2Id]];
+      }
+      console.log("commiting selected: ", newSelectedPairList);
+      this.$store.commit(
+        MutationTypes.SET_SELECTED_PAIR_LIST,
+        newSelectedPairList
+      );
     },
   },
 });
@@ -35,4 +69,11 @@ export default defineComponent({
   width: 100px;
   border: 1px solid;
 }
+.matrix-cell__selected {
+  @include color-theme("border-color", "red");
+
+  border: 4px solid;
+}
+
+
 </style>

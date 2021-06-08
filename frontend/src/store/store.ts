@@ -6,6 +6,7 @@ import { state, State } from "./state"
 export type Mutations<S = State> = {
   [MutationTypes.SET_PAIR_MATRIX](state: S, payload: any): void;
   [MutationTypes.SET_USER_LIST](state: S, payload: any): void;
+  [MutationTypes.SET_SELECTED_PAIR_LIST](state: S, payload: any): void;
 }
 
 export const mutations: MutationTree<State> & Mutations = {
@@ -13,8 +14,10 @@ export const mutations: MutationTree<State> & Mutations = {
     state.pairMatrix = payload
   },
   [MutationTypes.SET_USER_LIST](state, payload: any) {
-    console.log("in set user lsit", payload)
     state.userList = payload
+  },
+  [MutationTypes.SET_SELECTED_PAIR_LIST](state, payload: any) {
+    state.selectedPairs = payload
   },
 }
 
@@ -36,41 +39,3 @@ export type Store = Omit<
 export function userStore() {
   return store as Store;
 }
-
-
-// export default createStore({
-//   state: {
-//     pairMatrix: null,
-//     userList: null,
-//     pairSetList: null,
-//   },
-//   mutations: {
-//     setPairMatrix(state, payload) {
-//       state.pairMatrix = payload;
-//     },
-//     setUserList(state, payload) {
-//       state.userList = payload;
-//     }
-//   },
-//   actions: {},
-//   modules: {},
-// });
-
-
-// export default createStore({
-//   state: {
-//     pairMatrix: null,
-//     userList: null,
-//     pairSetList: null,
-//   },
-//   mutations: {
-//     setPairMatrix(state, payload) {
-//       state.pairMatrix = payload;
-//     },
-//     setUserList(state, payload) {
-//       state.userList = payload;
-//     }
-//   },
-//   actions: {},
-//   modules: {},
-// });

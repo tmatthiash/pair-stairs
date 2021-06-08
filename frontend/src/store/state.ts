@@ -2,7 +2,8 @@
 export const state = {
     pairMatrix: null,
     userList: null,
-    pairSetList: []
+    pairSetList: [],
+    selectedPairs: []
 }
 
 export type State = typeof state;
