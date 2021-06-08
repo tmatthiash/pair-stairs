@@ -2,15 +2,15 @@
   <div>
     <h2>Pair Stairs for team whatever</h2>
     <div class="matrix-parts-page">
-      <button class="matrix-parts-holder-tab" @click="selectedTab='Users'">
+      <button class="matrix-parts-holder-tab" @click="selectedTab = 'Users'">
         Users
       </button>
       <button class="matrix-parts-holder-tab" @click="selectedTab = 'Matrix'">
         Stair Matrix
       </button>
       <div class="matrix-parts-holder-contents">
-        <user-manager v-if="selectedTab === 'Users'"/>
-        <matrix-manager v-if="selectedTab === 'Matrix'"/>
+        <user-manager v-if="selectedTab === 'Users'" />
+        <matrix-manager :matrixName="matrixName" v-if="selectedTab === 'Matrix'" />
       </div>
     </div>
   </div>
@@ -37,8 +37,6 @@ export default defineComponent({
   props: ["matrixName"],
   methods: {
     joinSocket() {
-      console.log("joining ", this.getName());
-      // this.socket.emit("join", this.getName());
       this.socket.emit("join", { matrixName: this.getName() });
     },
     getName() {
@@ -48,12 +46,10 @@ export default defineComponent({
   mounted() {
     this.joinSocket();
     this.socket.on("UPDATE_MATRIX_INFO", (data) => {
-      console.log("got data ", data);
       this.$store.commit(MutationTypes.SET_PAIR_MATRIX, data.pairMatrix);
       this.$store.commit(MutationTypes.SET_USER_LIST, data.users);
     });
     this.socket.on("SET_USER_LIST", (data) => {
-      console.log("got users ", data);
       this.$store.commit(MutationTypes.SET_USER_LIST, data);
     });
   },

@@ -32,9 +32,15 @@ export default defineComponent({
       const foundPairMatch = selectedPairs.filter((pair: string[]) => {
         return pair.includes(this.user1Id) && pair.includes(this.user2Id);
       });
-      console.log("found pair match", foundPairMatch);
       return foundPairMatch.length > 0 ? true : false;
     },
+    // getPairDate() {
+    //   const { selectedPairs } = this.$store.state;
+    //   const foundPairMatch = selectedPairs.filter((pair: string[]) => {
+    //     return pair.includes(this.user1Id) && pair.includes(this.user2Id);
+    //   });
+    //   return selectedPairs[0].date ? selectedPairs[0].date : "--"
+    // },
   },
   methods: {
     toggleSelected() {
@@ -48,7 +54,6 @@ export default defineComponent({
         console.log("ids ", this.user1Id, this.user2Id);
         newSelectedPairList = [...selectedPairs, [this.user1Id, this.user2Id]];
       }
-      console.log("commiting selected: ", newSelectedPairList);
       this.$store.commit(
         MutationTypes.SET_SELECTED_PAIR_LIST,
         newSelectedPairList

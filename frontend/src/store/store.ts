@@ -7,6 +7,7 @@ export type Mutations<S = State> = {
   [MutationTypes.SET_PAIR_MATRIX](state: S, payload: any): void;
   [MutationTypes.SET_USER_LIST](state: S, payload: any): void;
   [MutationTypes.SET_SELECTED_PAIR_LIST](state: S, payload: any): void;
+  [MutationTypes.SET_USER_PAIR_SETS](state: S, payload: any): void;
 }
 
 export const mutations: MutationTree<State> & Mutations = {
@@ -18,6 +19,10 @@ export const mutations: MutationTree<State> & Mutations = {
   },
   [MutationTypes.SET_SELECTED_PAIR_LIST](state, payload: any) {
     state.selectedPairs = payload
+  },
+  [MutationTypes.SET_USER_PAIR_SETS](state, payload: any) {
+    console.log("setting pairSetList to ", payload)
+    state.pairSetList = payload
   },
 }
 

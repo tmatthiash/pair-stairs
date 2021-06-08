@@ -25,23 +25,64 @@
         {{ user.name }}
       </div>
     </div>
+    <button @click="setPairsForTheDay">SUBMIT</button>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
 import MatrixCell from "./MatrixCell/MatrixCell.vue";
-// import io from "socket.io-client";
-// import { MutationTypes } from "../../store/MutationTypes";
+import io from "socket.io-client";
+import axios from "axios";
+import { MutationTypes } from "../../store/MutationTypes";
 
 export default defineComponent({
   name: "MatrixManager",
+  props: ['matrixName'],
+  data() {
+    return {
+      socket: io(
+        `${process.env.VUE_APP_API_URL}:${process.env.VUE_APP_API_PORT}`
+      ),
+    };
+  },
   components: { MatrixCell },
   methods: {
     getUserList() {
       if (this.$store.state.userList) {
         return this.$store.state.userList;
       }
+    },
+    setPairsForTheDay() {
+      axios
+        .post(
+          `http://${process.env.VUE_APP_API_URL}:${process.env.VUE_APP_API_PORT}/api/pairset/batch-create`,
+          { pairSetList: this.$store.state.selectedPairs },
+          { withCredentials: true }
+        )
+        .then((res) => {
+          if (res.status === 201) {
+            this.socket.emit(
+              "TRIGGER_UPDATE_PAIR_SETS",
+              this.$store.state.pairMatrix
+            );
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+  },
+  mounted() {
+    this.socket.emit("join", { matrixName: this.matrixName});
+    this.socket.on("SET_USER_PAIR_SETS", (data) => {
+      console.log("recienved socket ")
+      this.$store.commit(MutationTypes.SET_USER_PAIR_SETS, data);
+    });
+  },
+  computed: {
+    getSelectedPairs(): string[][] {
+      return this.$store.state.selectedPairs;
     },
   },
 });

@@ -88,6 +88,7 @@ app.post('/login', function (req, res, next) {
 require("./src/routes/user.route")(app);
 require("./src/routes/login.route")(app);
 require("./src/routes/pairmatrix.route")(app);
+require("./src/routes/pairset.route")(app);
 
 const server = require('http').createServer(app);
 
@@ -118,6 +119,7 @@ const io = require("socket.io")(server, {
 
 require("./src/socketControllers/pairmatrix.socket")(io);
 require("./src/socketControllers/user.socket")(io);
+require("./src/socketControllers/pairset.socket")(io);
 
 
 const PORT = process.env.PORT || 8080;

@@ -11,7 +11,6 @@ exports = module.exports = async (io) => {
             })
             const sortedUsers = matrixUsers.sort((a, b) => a.name < b.name === true ? -1 : 1)
 
-            console.log("sorted users", sortedUsers)
             io.to(data.name).emit("SET_USER_LIST", sortedUsers);
         })
     })
