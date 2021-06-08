@@ -1,6 +1,6 @@
 <template>
   <div class="matrix-manager">
-    <button @click="toggleMode">TOGGLE MODE {{isInEditMode}}</button>
+    <button @click="toggleMode">TOGGLE MODE {{ isInEditMode }}</button>
     <div
       class="matrix-manager-row"
       v-for="(userY, indexY) in getUserList()"
@@ -12,7 +12,11 @@
           <!-- {{ indexY - indexX }} -->
           <!-- {{ userX.name }}
           {{ userY.name }} -->
-          <matrix-cell :user1Id="userX.id" :user2Id="userY.id" />
+          <matrix-cell
+            :user1Id="userX.id"
+            :user2Id="userY.id"
+            :isInEditMode="isInEditMode"
+          />
         </div>
       </div>
     </div>
@@ -27,7 +31,6 @@
       </div>
     </div>
     <button @click="setPairsForTheDay">SUBMIT</button>
-    <styled-date-picker :dateValue="'test'"/>
   </div>
 </template>
 
@@ -37,8 +40,6 @@ import MatrixCell from "./MatrixCell/MatrixCell.vue";
 import io from "socket.io-client";
 import axios from "axios";
 import { MutationTypes } from "../../store/MutationTypes";
-import StyledDatePicker from "../StyledDatePicker/StyledDatePicker.vue";
-
 
 export default defineComponent({
   name: "MatrixManager",
@@ -51,7 +52,7 @@ export default defineComponent({
       ),
     };
   },
-  components: { MatrixCell, StyledDatePicker },
+  components: { MatrixCell },
   methods: {
     getUserList() {
       if (this.$store.state.userList) {
@@ -59,7 +60,7 @@ export default defineComponent({
       }
     },
     toggleMode() {
-      this.isInEditMode = !this.isInEditMode
+      this.isInEditMode = !this.isInEditMode;
     },
     setPairsForTheDay() {
       axios

@@ -1,10 +1,14 @@
 <template>
-  <div
-    class="matrix-cell"
-    @click="toggleSelected"
-    v-bind:class="{ 'matrix-cell__selected': isPairSelected }"
-  >
-    <div>{{ getPairSetDate }}</div>
+  <div>
+    <div
+      v-if="!isInEditMode"
+      class="matrix-cell"
+      @click="toggleSelected"
+      v-bind:class="{ 'matrix-cell__selected': isPairSelected }"
+    >
+      <div>{{ getPairSetDate || "--" }}</div>
+    </div>
+    <styled-date-picker v-if="isInEditMode" :dateValue="getPairSetDate" />
   </div>
 </template>
 
@@ -12,10 +16,12 @@
 import { defineComponent } from "vue";
 import { PairSet } from "../../../types/PairSet";
 import { MutationTypes } from "../../../store/MutationTypes";
+import StyledDatePicker from "../../StyledDatePicker/StyledDatePicker.vue";
 
 export default defineComponent({
   name: "MatrixCell",
-  props: ["user1Id", "user2Id"],
+  props: ["user1Id", "user2Id", "isInEditMode"],
+  components: { StyledDatePicker },
   computed: {
     getPairSetDate(): unknown {
       const pairList: PairSet[] = this.$store.state.pairSetList;
@@ -25,7 +31,7 @@ export default defineComponent({
           set.userIdList.includes(this.user2Id)
         );
       });
-      return foundPairSet[0]?.date || "--";
+      return foundPairSet[0]?.date;
     },
     isPairSelected(): boolean {
       const { selectedPairs } = this.$store.state;
@@ -34,13 +40,6 @@ export default defineComponent({
       });
       return foundPairMatch.length > 0 ? true : false;
     },
-    // getPairDate() {
-    //   const { selectedPairs } = this.$store.state;
-    //   const foundPairMatch = selectedPairs.filter((pair: string[]) => {
-    //     return pair.includes(this.user1Id) && pair.includes(this.user2Id);
-    //   });
-    //   return selectedPairs[0].date ? selectedPairs[0].date : "--"
-    // },
   },
   methods: {
     toggleSelected() {
@@ -58,7 +57,7 @@ export default defineComponent({
         MutationTypes.SET_SELECTED_PAIR_LIST,
         newSelectedPairList
       );
-    },
+    }
   },
 });
 </script>
