@@ -66,6 +66,7 @@ export default defineComponent({
               "TRIGGER_UPDATE_PAIR_SETS",
               this.$store.state.pairMatrix
             );
+            this.$store.commit(MutationTypes.SET_SELECTED_PAIR_LIST, []);
           }
         })
         .catch((err) => {

@@ -48,6 +48,7 @@ export default defineComponent({
     this.socket.on("UPDATE_MATRIX_INFO", (data) => {
       this.$store.commit(MutationTypes.SET_PAIR_MATRIX, data.pairMatrix);
       this.$store.commit(MutationTypes.SET_USER_LIST, data.users);
+      this.$store.commit(MutationTypes.SET_USER_PAIR_SETS, data.pairSets);
     });
     this.socket.on("SET_USER_LIST", (data) => {
       this.$store.commit(MutationTypes.SET_USER_LIST, data);

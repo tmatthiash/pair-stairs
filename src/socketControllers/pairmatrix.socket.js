@@ -23,9 +23,24 @@ exports = module.exports = async (io) => {
                 where: { pairmatrixId: foundMatrix.id }
             })
             const sortedUsers = foundUsers.sort((a, b) => a.name < b.name === true ? -1 : 1)
+
+            const foundSets = await db.pairset.findAll({
+                where: {
+                    pairmatrixId: foundMatrix.id
+                }
+            });
+
+            const formattedSets = foundSets.map((pair) => {
+                return {
+                    date: pair.date,
+                    userIdList: [pair.userOneId, pair.userTwoId]
+                }
+            })
+
             const matrixData = {
                 pairMatrix: foundMatrix,
-                users: sortedUsers
+                users: sortedUsers,
+                pairSets: formattedSets
             }
             io.to(matrixName).emit("UPDATE_MATRIX_INFO", matrixData);
         })

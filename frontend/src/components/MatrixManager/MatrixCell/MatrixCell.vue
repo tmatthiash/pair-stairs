@@ -25,7 +25,7 @@ export default defineComponent({
           set.userIdList.includes(this.user2Id)
         );
       });
-      return foundPairSet[0]?.date || "N/A";
+      return foundPairSet[0]?.date || "--";
     },
     isPairSelected(): boolean {
       const { selectedPairs } = this.$store.state;
@@ -73,6 +73,7 @@ export default defineComponent({
 
   width: 100px;
   border: 1px solid;
+  cursor: pointer;
 }
 .matrix-cell__selected {
   animation: matrix-cell-pulse 1.5s infinite;
