@@ -68,11 +68,6 @@ export default defineComponent({
 @import "../../../colors.scss";
 
 .matrix-cell {
-  @include color-theme("background-color", "secondary-background");
-  @include color-theme("border-color", "primary-accent");
-
-  width: 100px;
-  border: 1px solid;
   cursor: pointer;
 }
 .matrix-cell__selected {

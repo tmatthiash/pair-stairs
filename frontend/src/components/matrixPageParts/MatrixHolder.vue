@@ -80,5 +80,7 @@ export default defineComponent({
   border-radius: 4px;
   height: 70%;
   width: 80%;
+  display: flex;
+  justify-content: center;
 }
 </style>

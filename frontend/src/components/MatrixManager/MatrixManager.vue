@@ -18,7 +18,7 @@
     <div class="matrix-manager-x-labels">
       <div class="matrix-manager-blank-cell" />
       <div
-        class="matrix-manager-cell"
+        class="matrix-manager-cell  matrix-manager-cell-x-label"
         v-for="user in getUserList()"
         :key="user.id"
       >
@@ -92,6 +92,10 @@ export default defineComponent({
 <style lang="scss" scoped>
 @import "../../colors.scss";
 
+.matrix-manager {
+  margin-top: 50px;
+}
+
 .matrix-manager-row {
   display: flex;
   margin-left: 20px;
@@ -108,6 +112,7 @@ export default defineComponent({
 
   width: 100px;
   border: 1px solid;
+  margin: 1px
 }
 
 .matrix-manager-cell {
@@ -116,10 +121,16 @@ export default defineComponent({
 
   width: 100px;
   border: 1px solid;
+  margin: 1px;
+  border-radius: 4px;
+}
+
+.matrix-manager-cell-x-label {
+  border-radius: unset;
 }
 
 .matrix-manager-blank-cell {
-  width: 100px;
-  border: 1px solid;
+  width: 104px;
+  border: none;
 }
 </style>
