@@ -13,7 +13,6 @@ import { defineComponent } from "vue";
 import io from "socket.io-client";
 import axios from "axios";
 
-
 export default defineComponent({
   name: "UserManager",
   data() {
@@ -27,7 +26,7 @@ export default defineComponent({
   computed: {
     getUsers() {
       return this.$store.state.userList;
-    }
+    },
   },
   methods: {
     addNewUser() {
@@ -38,7 +37,10 @@ export default defineComponent({
         )
         .then((res) => {
           if (res.status === 201) {
-            this.socket.emit("TRIGGER_UPDATE_USERS", this.$store.state.pairMatrix);
+            this.socket.emit(
+              "TRIGGER_UPDATE_USERS",
+              this.$store.state.pairMatrix
+            );
           }
         });
       // axios.get(

@@ -54,7 +54,7 @@ export default defineComponent({
     };
   },
   methods: {
-    onSubmit(e: { preventDefault: () => void; }) {
+    onSubmit(e: { preventDefault: () => void }) {
       e.preventDefault();
       axios
         .post(

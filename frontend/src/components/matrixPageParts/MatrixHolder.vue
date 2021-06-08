@@ -10,7 +10,10 @@
       </button>
       <div class="matrix-parts-holder-contents">
         <user-manager v-if="selectedTab === 'Users'" />
-        <matrix-manager :matrixName="matrixName" v-if="selectedTab === 'Matrix'" />
+        <matrix-manager
+          :matrixName="matrixName"
+          v-if="selectedTab === 'Matrix'"
+        />
       </div>
     </div>
   </div>

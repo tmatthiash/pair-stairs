@@ -1,5 +1,6 @@
 <template>
   <div class="matrix-manager">
+    <button @click="toggleMode">TOGGLE MODE {{isInEditMode}}</button>
     <div
       class="matrix-manager-row"
       v-for="(userY, indexY) in getUserList()"
@@ -18,7 +19,7 @@
     <div class="matrix-manager-x-labels">
       <div class="matrix-manager-blank-cell" />
       <div
-        class="matrix-manager-cell  matrix-manager-cell-x-label"
+        class="matrix-manager-cell matrix-manager-cell-x-label"
         v-for="user in getUserList()"
         :key="user.id"
       >
@@ -26,6 +27,7 @@
       </div>
     </div>
     <button @click="setPairsForTheDay">SUBMIT</button>
+    <styled-date-picker :dateValue="'test'"/>
   </div>
 </template>
 
@@ -35,23 +37,29 @@ import MatrixCell from "./MatrixCell/MatrixCell.vue";
 import io from "socket.io-client";
 import axios from "axios";
 import { MutationTypes } from "../../store/MutationTypes";
+import StyledDatePicker from "../StyledDatePicker/StyledDatePicker.vue";
+
 
 export default defineComponent({
   name: "MatrixManager",
-  props: ['matrixName'],
+  props: ["matrixName"],
   data() {
     return {
+      isInEditMode: false,
       socket: io(
         `${process.env.VUE_APP_API_URL}:${process.env.VUE_APP_API_PORT}`
       ),
     };
   },
-  components: { MatrixCell },
+  components: { MatrixCell, StyledDatePicker },
   methods: {
     getUserList() {
       if (this.$store.state.userList) {
         return this.$store.state.userList;
       }
+    },
+    toggleMode() {
+      this.isInEditMode = !this.isInEditMode
     },
     setPairsForTheDay() {
       axios
@@ -75,9 +83,9 @@ export default defineComponent({
     },
   },
   mounted() {
-    this.socket.emit("join", { matrixName: this.matrixName});
+    this.socket.emit("join", { matrixName: this.matrixName });
     this.socket.on("SET_USER_PAIR_SETS", (data) => {
-      console.log("recienved socket ")
+      console.log("recienved socket ");
       this.$store.commit(MutationTypes.SET_USER_PAIR_SETS, data);
     });
   },
@@ -112,7 +120,7 @@ export default defineComponent({
 
   width: 100px;
   border: 1px solid;
-  margin: 1px
+  margin: 1px;
 }
 
 .matrix-manager-cell {

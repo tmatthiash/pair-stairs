@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
-import HomePage from "../views/HomePage.vue"
-import PairMatrixPage from "../views/PairMatrixPage.vue"
-import NewStair from "../components/NewStair/NewStair.vue"
+import HomePage from "../views/HomePage.vue";
+import PairMatrixPage from "../views/PairMatrixPage.vue";
+import NewStair from "../components/NewStair/NewStair.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -18,8 +18,8 @@ const routes: Array<RouteRecordRaw> = [
     path: "/pairmatrix/:matrixName",
     name: "PairMatrix",
     component: PairMatrixPage,
-    props: true
-  }
+    props: true,
+  },
 ];
 
 const router = createRouter({

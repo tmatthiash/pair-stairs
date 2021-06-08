@@ -16,7 +16,6 @@
 <script lang="ts">
 import { defineComponent } from "@vue/runtime-core";
 import axios from "axios";
-import io from "socket.io"
 
 export default defineComponent({
   name: "UserLogin",

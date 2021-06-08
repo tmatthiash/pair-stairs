@@ -4,7 +4,7 @@
     @click="toggleSelected"
     v-bind:class="{ 'matrix-cell__selected': isPairSelected }"
   >
-    {{ getPairSet }}
+    <div>{{ getPairSetDate }}</div>
   </div>
 </template>
 
@@ -17,7 +17,7 @@ export default defineComponent({
   name: "MatrixCell",
   props: ["user1Id", "user2Id"],
   computed: {
-    getPairSet(): unknown {
+    getPairSetDate(): unknown {
       const pairList: PairSet[] = this.$store.state.pairSetList;
       const foundPairSet = pairList.filter((set) => {
         return (
@@ -62,7 +62,6 @@ export default defineComponent({
   },
 });
 </script>
-
 
 <style lang="scss" scoped>
 @import "../../../colors.scss";
