@@ -52,7 +52,7 @@ exports.editSinglePairSet = async (req, res) => {
     const matrixUsersThatMatchRequest = await matrixUsers.filter((mUser) => {
         return mUser.id === editedPairSet.pairList[0] || mUser.id === editedPairSet.pairList[1]
     });
-    
+
     if (matrixUsersThatMatchRequest.length !== 2) {
         res.status(500).send({ message: "Invalid user pair" })
     }
@@ -60,9 +60,7 @@ exports.editSinglePairSet = async (req, res) => {
     PairSet.destroy({
         where: {
             [Op.or]: [{ userOneId: updatedPairSet.userOneId }, { userOneId: updatedPairSet.userTwoId }],
-            [Op.or]: [{ userTwoId: updatedPairSet.userOneId }, { userTwoId: updatedPairSet.userTwoId }],
-            date: updatedPairSet.date
-        },
+            [Op.or]: [{ userTwoId: updatedPairSet.userOneId }, { userTwoId: updatedPairSet.userTwoId }]        },
     })
 
     return PairSet.create(updatedPairSet)
