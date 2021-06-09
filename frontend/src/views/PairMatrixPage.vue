@@ -36,7 +36,6 @@ export default defineComponent({
           `http://${process.env.VUE_APP_API_URL}:${process.env.VUE_APP_API_PORT}/api/authentication/`
         )
         .then((response) => {
-          console.log("got response ", response.data);
           this.pageStatus =
             response.data.isUserAuthenticated === true
               ? "authorized"
@@ -44,7 +43,6 @@ export default defineComponent({
         });
     },
     pageStatusChange(newStatus: string) {
-      console.log("got Status change of, ", newStatus);
       this.pageStatus = newStatus;
     },
     setAuthenticationStatus(newStatus: string) {

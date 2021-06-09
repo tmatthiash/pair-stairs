@@ -1,14 +1,12 @@
 <template>
   <div>
-    <datepicker @change="dateChanged" v-model="selectedDate" />
+    <datepicker v-model="selectedDate" />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
 import Datepicker from "vue3-datepicker";
-// import { ref } from 'vue'
-// const picked = ref(new Date())
 
 export default defineComponent({
   name: "StyledDatePicker",
@@ -22,13 +20,13 @@ export default defineComponent({
     Datepicker,
   },
   methods: {
-    dateChanged() {
-      console.log("date changed");
-    },
+    emitChange(val: string) {
+      this.$emit("matrixCellEdited", val)
+    }
   },
   watch: {
     selectedDate(val) {
-      console.log("date changed");
+      this.emitChange(val)
     },
   },
 });

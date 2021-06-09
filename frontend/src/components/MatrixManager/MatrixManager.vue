@@ -13,6 +13,7 @@
           <!-- {{ userX.name }}
           {{ userY.name }} -->
           <matrix-cell
+            @turnEditModeOff="turnEditModeOff"
             :user1Id="userX.id"
             :user2Id="userY.id"
             :isInEditMode="isInEditMode"
@@ -82,11 +83,13 @@ export default defineComponent({
           console.log(err);
         });
     },
+    turnEditModeOff(){
+      this.isInEditMode = false;
+    }
   },
   mounted() {
     this.socket.emit("join", { matrixName: this.matrixName });
     this.socket.on("SET_USER_PAIR_SETS", (data) => {
-      console.log("recienved socket ");
       this.$store.commit(MutationTypes.SET_USER_PAIR_SETS, data);
     });
   },

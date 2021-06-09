@@ -8,7 +8,11 @@
     >
       <div>{{ getPairSetDate || "--" }}</div>
     </div>
-    <styled-date-picker v-if="isInEditMode" :dateValue="getPairSetDate" />
+    <styled-date-picker
+      @matrixCellEdited="matrixCellEdited"
+      v-if="isInEditMode"
+      :dateValue="getPairSetDate"
+    />
   </div>
 </template>
 
@@ -16,12 +20,21 @@
 import { defineComponent } from "vue";
 import { PairSet } from "../../../types/PairSet";
 import { MutationTypes } from "../../../store/MutationTypes";
+import axios from "axios";
+import io from "socket.io-client";
 import StyledDatePicker from "../../StyledDatePicker/StyledDatePicker.vue";
 
 export default defineComponent({
   name: "MatrixCell",
   props: ["user1Id", "user2Id", "isInEditMode"],
   components: { StyledDatePicker },
+  data() {
+    return {
+      socket: io(
+        `${process.env.VUE_APP_API_URL}:${process.env.VUE_APP_API_PORT}`
+      ),
+    };
+  },
   computed: {
     getPairSetDate(): unknown {
       const pairList: PairSet[] = this.$store.state.pairSetList;
@@ -57,7 +70,28 @@ export default defineComponent({
         MutationTypes.SET_SELECTED_PAIR_LIST,
         newSelectedPairList
       );
-    }
+    },
+    matrixCellEdited(changedDate: Date) {
+      const editedPairSet = {
+        date: changedDate,
+        pairList: [this.user1Id, this.user2Id],
+      };
+      axios
+        .put(
+          `http://${process.env.VUE_APP_API_URL}:${process.env.VUE_APP_API_PORT}/api/pairset/editSinglePairSet`,
+          { editedPairSet },
+          { withCredentials: true }
+        )
+        .then((res) => {
+          if (res.status === 200) {
+            this.$emit("turnEditModeOff");
+            this.socket.emit(
+              "TRIGGER_UPDATE_PAIR_SETS",
+              this.$store.state.pairMatrix
+            );
+          }
+        });
+    },
   },
 });
 </script>

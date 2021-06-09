@@ -6,5 +6,7 @@ module.exports = app => {
 
     router.post("/batch-create/", pairset.setTodayPairs);
 
+    router.put("/editSinglePairSet/", pairset.editSinglePairSet);
+
     app.use('/api/pairset', router);
 };

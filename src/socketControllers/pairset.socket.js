@@ -16,8 +16,6 @@ exports = module.exports = async (io) => {
                     userIdList: [pair.userOneId, pair.userTwoId]
                 }
             })
-
-            console.log(`emmitting ${formattedSets} to ${data.name}`)
             io.to(data.name).emit("SET_USER_PAIR_SETS", formattedSets);
         })
     })
