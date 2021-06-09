@@ -8,7 +8,7 @@
       <router-link class="home-page-button-holder-button" to="/newStair"
         >Create a new stair set!</router-link
       >
-      <router-link class="home-page-button-holder-button" to="/newStair"
+      <router-link class="home-page-button-holder-button" to="/pairmatrix/"
         >Join an existing room</router-link
       >
     </div>

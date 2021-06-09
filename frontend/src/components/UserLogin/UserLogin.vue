@@ -1,8 +1,10 @@
 <template>
   <div class="user-login">
-    <div v-if="initialName !== ''" class="user-login-form__unauthorized">
+    <!-- <div v-if="initialName !== ''" class="user-login-form__unauthorized"> -->
+    <div class="user-login-form__unauthorized">
       <form @submit="onSubmitLogin" class="user-login-form-contents">
-        <input class="user-login-form-input" v-model="getName" />
+        <input v-if="initialName !== ''" class="user-login-form-input" v-model="getName" />
+        <input v-else class="user-login-form-input" v-model="form.name" />
         <input class="user-login-form-input" v-model="form.password" />
         <button class="user-login-form-submit">Submit</button>
         <div class="user-login-form-error" v-if="badLoginOccured">

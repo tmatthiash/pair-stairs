@@ -62,18 +62,11 @@ export default defineComponent({
           this.form
         )
         .then((res) => {
-          console.log(res);
+          if(res.status === 201) {
+            this.$router.push(`/pairmatrix/${this.form.name}`)
+          }
         });
     },
-    // onSubmit(e: { preventDefault: () => void }) {
-    //   e.preventDefault();
-    //   axios
-    //     .get(
-    //       `http://${process.env.VUE_APP_API_URL}:${process.env.VUE_APP_API_PORT}/api/pairmatrix/findbyname/${this.form.name}`)
-    //     .then((res) => {
-    //       console.log(res);
-    //     });
-    // },
   },
   computed: {
     isPin() {
