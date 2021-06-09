@@ -42,9 +42,6 @@ exports.editSinglePairSet = async (req, res) => {
         pairmatrixId: req.user.id
     }
 
-    // console.log("editedPairSet ", editedPairSet);
-    // console.log("updatedPairSet ", updatedPairSet);
-
     const matrixUsers = await User.findAll({
         where: { pairmatrixId: req.user.id }
     });
@@ -57,10 +54,22 @@ exports.editSinglePairSet = async (req, res) => {
         res.status(500).send({ message: "Invalid user pair" })
     }
 
+    // PairSet.destroy({
+    //     where: {
+    //         [Op.or]: [{ userOneId: updatedPairSet.userOneId }, { userOneId: updatedPairSet.userTwoId }],
+    //         [Op.or]: [{ userTwoId: updatedPairSet.userOneId }, { userTwoId: updatedPairSet.userTwoId }]
+    //     },
+    // })
     PairSet.destroy({
         where: {
-            [Op.or]: [{ userOneId: updatedPairSet.userOneId }, { userOneId: updatedPairSet.userTwoId }],
-            [Op.or]: [{ userTwoId: updatedPairSet.userOneId }, { userTwoId: updatedPairSet.userTwoId }]        },
+            [Op.or]: [{
+                userOneId: updatedPairSet.userOneId,
+                userTwoId: updatedPairSet.userTwoId
+            }, {
+                userOneId: updatedPairSet.userTwoId,
+                userTwoId: updatedPairSet.userOneId
+            }]
+        }
     })
 
     return PairSet.create(updatedPairSet)
