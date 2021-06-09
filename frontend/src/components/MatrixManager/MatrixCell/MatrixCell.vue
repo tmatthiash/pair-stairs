@@ -3,6 +3,9 @@
     <div
       v-if="!isInEditMode"
       class="matrix-cell"
+      v-bind:style="{
+        backgroundColor: `rgba(255, 0, 0, ${getOpacityPercentage}`,
+      }"
       @click="toggleSelected"
       v-bind:class="{ 'matrix-cell__selected': isPairSelected }"
     >
@@ -36,7 +39,7 @@ export default defineComponent({
     };
   },
   computed: {
-    getPairSetDate(): unknown {
+    getPairSetDate(): Date | undefined {
       const pairList: PairSet[] = this.$store.state.pairSetList;
       const foundPairSet = pairList.filter((set) => {
         return (
@@ -56,16 +59,23 @@ export default defineComponent({
     getPairSetList(): PairSet[] {
       return this.$store.state.pairSetList;
     },
-    getOpacityPercentage() {
+    getOpacityPercentage(): number {
       const dateList = this.getPairSetList.map((pairSet) => {
         return new Date(pairSet.date).getTime();
       });
-      console.log("datelist ", dateList)
       const maxDate = Math.max(...dateList);
       const minDate = Math.min(...dateList);
-      console.log("maxDate, ", maxDate);
-      console.log("min date, ", minDate);
-      return "sldkfj";
+      const minMaxDateDiff = maxDate - minDate;
+
+      if (!this.getPairSetDate) {
+        return 0;
+      }
+      const thisCellDate = new Date(this.getPairSetDate).getTime();
+      const dateDiffFromMin = thisCellDate - minDate;
+      console.log("diff date ", dateDiffFromMin)
+      const dateDiffPercentage = 1 - (dateDiffFromMin / minMaxDateDiff);
+      console.log("setting opacity of ", dateDiffPercentage)
+      return dateDiffPercentage;
     },
   },
   mounted() {
@@ -117,7 +127,6 @@ export default defineComponent({
 
 .matrix-cell {
   cursor: pointer;
-  background-color: rgba(255, 0, 0, 50);
 }
 .matrix-cell__selected {
   animation: matrix-cell-pulse 1.5s infinite;
