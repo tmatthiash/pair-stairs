@@ -53,6 +53,23 @@ export default defineComponent({
       });
       return foundPairMatch.length > 0 ? true : false;
     },
+    getPairSetList(): PairSet[] {
+      return this.$store.state.pairSetList;
+    },
+    getOpacityPercentage() {
+      const dateList = this.getPairSetList.map((pairSet) => {
+        return new Date(pairSet.date).getTime();
+      });
+      console.log("datelist ", dateList)
+      const maxDate = Math.max(...dateList);
+      const minDate = Math.min(...dateList);
+      console.log("maxDate, ", maxDate);
+      console.log("min date, ", minDate);
+      return "sldkfj";
+    },
+  },
+  mounted() {
+    this.getOpacityPercentage;
   },
   methods: {
     toggleSelected() {
@@ -63,7 +80,6 @@ export default defineComponent({
           return !(pair.includes(this.user1Id) && pair.includes(this.user2Id));
         });
       } else {
-        console.log("ids ", this.user1Id, this.user2Id);
         newSelectedPairList = [...selectedPairs, [this.user1Id, this.user2Id]];
       }
       this.$store.commit(
@@ -101,6 +117,7 @@ export default defineComponent({
 
 .matrix-cell {
   cursor: pointer;
+  background-color: rgba(255, 0, 0, 50);
 }
 .matrix-cell__selected {
   animation: matrix-cell-pulse 1.5s infinite;
