@@ -72,9 +72,7 @@ export default defineComponent({
       }
       const thisCellDate = new Date(this.getPairSetDate).getTime();
       const dateDiffFromMin = thisCellDate - minDate;
-      console.log("diff date ", dateDiffFromMin)
       const dateDiffPercentage = 1 - (dateDiffFromMin / minMaxDateDiff);
-      console.log("setting opacity of ", dateDiffPercentage)
       return dateDiffPercentage;
     },
   },

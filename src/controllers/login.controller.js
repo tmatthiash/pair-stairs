@@ -2,7 +2,9 @@ const passport = require("passport");
 
 exports.isUserAuthenticated = (req, res) => {
   if (!req.user) {
-    return res.status(201).send({ isUserAuthenticated: false });
+    return res.status(401).send({ isUserAuthenticated: false });
+  } else if (req.user.dataValues.name !== req.params.name) {
+    return res.status(401).send({ isUserAuthenticated: false });
   }
   else {
     return res.status(200).send({ isUserAuthenticated: true });

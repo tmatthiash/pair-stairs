@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2>Pair Stairs for team whatever</h2>
+    <h2>Pair Stairs for team {{getName()}}</h2>
     <div class="matrix-parts-page">
       <button class="matrix-parts-holder-tab" @click="selectedTab = 'Users'">
         Users

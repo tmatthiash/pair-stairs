@@ -14,7 +14,8 @@ exports.setTodayPairs = async (req, res) => {
 
     await PairSet.destroy({
         where: {
-            date: new Date()
+            date: new Date(),
+            pairmatrixId: req.user.id
         }
     });
 
@@ -73,11 +74,13 @@ const destroyPairSetById = (pairSetIdOne, pairSetIdTwo) => {
     PairSet.destroy({
         where: {
             [Op.or]: [{
-                userOneId: pairSetIdOne,
-                userTwoId: pairSetIdTwo
+                [Op.and]: [
+                    { userOneId: pairSetIdOne },
+                    { userTwoId: pairSetIdTwo }]
             }, {
-                userOneId: pairSetIdTwo,
-                userTwoId: pairSetIdOne
+                [Op.and]: [
+                    { userOneId: pairSetIdTwo },
+                    { userTwoId: pairSetIdOne }]
             }]
         }
     })

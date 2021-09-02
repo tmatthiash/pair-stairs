@@ -41,6 +41,10 @@ exports.create = async (req, res) => {
 
 exports.findByName = connectEnsureLogin.ensureLoggedIn(), (req, res) => {
     const name = req.params.name;
+    
+    if(req.params.name !== req.user.dataValue.name) {
+        return res.status(401).send();
+    }
 
     PairMatrix.findOne({
         where: { name },

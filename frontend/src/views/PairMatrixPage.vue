@@ -33,7 +33,7 @@ export default defineComponent({
     getAuthenticationStatus() {
       axios
         .get(
-          `http://${process.env.VUE_APP_API_URL}:${process.env.VUE_APP_API_PORT}/api/authentication/`
+          `http://${process.env.VUE_APP_API_URL}:${process.env.VUE_APP_API_PORT}/api/authentication/${this.matrixName}`
         )
         .then((response) => {
           this.pageStatus =

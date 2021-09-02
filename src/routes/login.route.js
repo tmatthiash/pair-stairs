@@ -3,9 +3,9 @@ module.exports = app => {
 
     var router = require("express").Router();
 
-    router.get("/", authenticate.isUserAuthenticated)
+    router.get("/:name", authenticate.isUserAuthenticated)
 
-    router.post("/", authenticate.loginToRoom)
+    // router.post("/", authenticate.loginToRoom)
 
     app.use("/api/authentication", router)
 }
