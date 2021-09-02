@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2>Pair Stairs for team {{getName()}}</h2>
+    <h2>Pair Stairs for team {{ getName() }}</h2>
     <div class="matrix-parts-page">
       <button class="matrix-parts-holder-tab" @click="selectedTab = 'Users'">
         Users
@@ -9,10 +9,18 @@
         Stair Matrix
       </button>
       <div class="matrix-parts-holder-contents">
-        <user-manager v-if="selectedTab === 'Users'" />
+        <user-manager
+          v-if="
+            selectedTab === 'Users' ||
+            (selectedTab === null && getUsers?.length < 3)
+          "
+        />
         <matrix-manager
           :matrixName="matrixName"
-          v-if="selectedTab === 'Matrix'"
+          v-if="
+            selectedTab === 'Matrix' ||
+            (selectedTab === null && getUsers?.length >= 3)
+          "
         />
       </div>
     </div>
@@ -34,7 +42,7 @@ export default defineComponent({
       socket: io(
         `${process.env.VUE_APP_API_URL}:${process.env.VUE_APP_API_PORT}`
       ),
-      selectedTab: "Users",
+      selectedTab: null,
     };
   },
   props: ["matrixName"],
@@ -44,6 +52,11 @@ export default defineComponent({
     },
     getName() {
       return this.matrixName;
+    },
+  },
+  computed: {
+    getUsers(): Array<unknown> | null {
+      return this.$store.state.userList;
     },
   },
   mounted() {

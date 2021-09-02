@@ -31,6 +31,7 @@ export default defineComponent({
   },
   methods: {
     getAuthenticationStatus() {
+      console.log(this.matrixName)
       axios
         .get(
           `http://${process.env.VUE_APP_API_URL}:${process.env.VUE_APP_API_PORT}/api/authentication/${this.matrixName}`

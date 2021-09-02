@@ -62,8 +62,18 @@ export default defineComponent({
           this.form
         )
         .then((res) => {
-          if(res.status === 201) {
-            this.$router.push(`/pairmatrix/${this.form.name}`)
+          if (res.status === 201) {
+            axios
+              .post(
+                `http://${process.env.VUE_APP_API_URL}:${process.env.VUE_APP_API_PORT}/login`,
+                this.form,
+                { withCredentials: true }
+              )
+              .then((res) => {
+                if (res.data.success) {
+                  this.$router.push(`/pairmatrix/${this.form.name}`);
+                }
+              });
           }
         });
     },

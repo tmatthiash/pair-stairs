@@ -1,25 +1,17 @@
 const passport = require("passport");
 
 exports.isUserAuthenticated = (req, res) => {
+
+  console.log("req.user ", req.user);
+
   if (!req.user) {
-    return res.status(401).send({ isUserAuthenticated: false });
+    return res.status(200).send({ isUserAuthenticated: false });
   } else if (req.user.dataValues.name !== req.params.name) {
-    return res.status(401).send({ isUserAuthenticated: false });
+    return res.status(200).send({ isUserAuthenticated: false });
   }
   else {
     return res.status(200).send({ isUserAuthenticated: true });
   }
-  // if(!req.session){
-  //     return res.status(200).send({ isUserAuthenticated: false })
-  // }
-  // if(!req.session.passport){
-  //     return res.status(200).send({ isUserAuthenticated: false })
-  // }
-  // if (req.session.passport.user) {
-  //     return res.status(200).send({ isUserAuthenticated: true })
-  // } else {
-  //     return res.status(200).send({ isUserAuthenticated: false })
-  // }
 }
 
 exports.login = (req, res, next) => {

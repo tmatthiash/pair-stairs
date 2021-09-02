@@ -17,6 +17,9 @@
       <button type="submit" class="new-stair-options-form-button">
         Join Matrix
       </button>
+      <div class="join-stair-form-error" v-if="badLoginOccured">
+        Name / Password was incorrect
+      </div>
     </form>
   </div>
 </template>
@@ -110,6 +113,6 @@ import { defineComponent } from "vue";
   text-decoration: none;
   border: 1px solid;
   border-radius: 5px;
-  cursor:pointer;
+  cursor: pointer;
 }
 </style>
