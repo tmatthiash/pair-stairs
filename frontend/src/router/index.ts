@@ -20,6 +20,11 @@ const routes: Array<RouteRecordRaw> = [
     name: "PairMatrix",
     component: PairMatrixPage,
     props: true,
+  },  
+  {
+    path: "/pairmatrix/",
+    name: "PairMatrix",
+    component: PairMatrixPage,
   },
   {
     path: "/joinmatrix/",

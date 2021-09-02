@@ -61,3 +61,7 @@ how to kill a specific port when your shit crashes
 Connect to mysql in terminal
 
 `mysql -u root -p`
+
+If your db is in a docker container connect to it's bash terminal first
+
+`docker exec -it some-mysql bash`

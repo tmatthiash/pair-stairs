@@ -62,8 +62,9 @@ export default defineComponent({
           this.form
         )
         .then((res) => {
-          console.log(res);
-          this.$router.push({ path: `/pairmatrix/${this.form.name}` })
+          if(res.status === 201) {
+            this.$router.push(`/pairmatrix/${this.form.name}`)
+          }
         });
     },
   },

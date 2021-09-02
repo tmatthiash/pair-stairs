@@ -27,7 +27,7 @@ exports.create = async (req, res) => {
     PairMatrix.create(newPairMatrix)
         .then(data => {
             const response = {...data, password: "That's Secret"}
-            res.send(response);
+            res.status(201).send(response);
         })
         .catch(err => {
             console.log("res: ", err)

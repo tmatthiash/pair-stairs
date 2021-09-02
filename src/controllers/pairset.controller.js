@@ -5,7 +5,7 @@ const User = db.user;
 
 exports.setTodayPairs = async (req, res) => {
     const { pairSetList } = req.body;
-    if (!pairSetList || pairSetList < 1) {
+    if (!pairSetList || pairSetList.length < 1) {
         res.status(400).send({
             message: "A pair set list is required!"
         });
@@ -16,6 +16,10 @@ exports.setTodayPairs = async (req, res) => {
         where: {
             date: new Date()
         }
+    });
+
+    pairSetList.forEach(pairSet => {
+        destroyPairSetById(pairSet[0], pairSet[1])
     });
 
     const pairSetToSave = pairSetList.map((ps) => {
@@ -42,9 +46,6 @@ exports.editSinglePairSet = async (req, res) => {
         pairmatrixId: req.user.id
     }
 
-    // console.log("editedPairSet ", editedPairSet);
-    // console.log("updatedPairSet ", updatedPairSet);
-
     const matrixUsers = await User.findAll({
         where: { pairmatrixId: req.user.id }
     });
@@ -57,11 +58,7 @@ exports.editSinglePairSet = async (req, res) => {
         res.status(500).send({ message: "Invalid user pair" })
     }
 
-    PairSet.destroy({
-        where: {
-            [Op.or]: [{ userOneId: updatedPairSet.userOneId }, { userOneId: updatedPairSet.userTwoId }],
-            [Op.or]: [{ userTwoId: updatedPairSet.userOneId }, { userTwoId: updatedPairSet.userTwoId }]        },
-    })
+    destroyPairSetById(updatedPairSet.userOneId, updatedPairSet.userTwoId)
 
     return PairSet.create(updatedPairSet)
         .then((data) => {
@@ -70,4 +67,18 @@ exports.editSinglePairSet = async (req, res) => {
         .catch((err) => {
             res.status(500).send();
         })
+}
+
+const destroyPairSetById = (pairSetIdOne, pairSetIdTwo) => {
+    PairSet.destroy({
+        where: {
+            [Op.or]: [{
+                userOneId: pairSetIdOne,
+                userTwoId: pairSetIdTwo
+            }, {
+                userOneId: pairSetIdTwo,
+                userTwoId: pairSetIdOne
+            }]
+        }
+    })
 }
