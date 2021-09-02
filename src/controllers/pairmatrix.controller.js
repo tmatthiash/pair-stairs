@@ -22,12 +22,16 @@ exports.create = async (req, res) => {
         password: passwordHash
     }
 
+    console.log("newMatrix ", newPairMatrix)
+
     PairMatrix.create(newPairMatrix)
         .then(data => {
             const response = {...data, password: "That's Secret"}
             res.send(response);
         })
         .catch(err => {
+            console.log("res: ", err)
+
             res.status(500).send({
                 message:
                     err.message || "Some error occurred while creating the Pair Matrix."

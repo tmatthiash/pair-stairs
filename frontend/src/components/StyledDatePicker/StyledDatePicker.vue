@@ -21,12 +21,12 @@ export default defineComponent({
   },
   methods: {
     emitChange(val: string) {
-      this.$emit("matrixCellEdited", val)
+      this.$emit("matrixCellEdited", val);
     }
   },
   watch: {
     selectedDate(val) {
-      this.emitChange(val)
+      this.emitChange(val);
     },
   },
 });

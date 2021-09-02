@@ -20,7 +20,6 @@ exports.isUserAuthenticated = (req, res) => {
   // }
 }
 
-
 exports.login = (req, res, next) => {
   passport.authenticate('local', (err, user) => {
     if (err) {

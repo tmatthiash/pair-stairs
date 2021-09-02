@@ -2,6 +2,7 @@ import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import HomePage from "../views/HomePage.vue";
 import PairMatrixPage from "../views/PairMatrixPage.vue";
 import NewStair from "../components/NewStair/NewStair.vue";
+import JoinMatrix from "../components/JoinMatrix/JoinMatrix.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -19,6 +20,11 @@ const routes: Array<RouteRecordRaw> = [
     name: "PairMatrix",
     component: PairMatrixPage,
     props: true,
+  },
+  {
+    path: "/joinmatrix/",
+    name: "JoinMatrix",
+    component: JoinMatrix,
   },
 ];
 

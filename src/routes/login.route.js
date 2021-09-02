@@ -5,5 +5,7 @@ module.exports = app => {
 
     router.get("/", authenticate.isUserAuthenticated)
 
+    router.post("/", authenticate.loginToRoom)
+
     app.use("/api/authentication", router)
 }
