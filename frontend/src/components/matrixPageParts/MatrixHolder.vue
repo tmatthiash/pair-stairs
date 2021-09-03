@@ -2,26 +2,30 @@
   <div>
     <h2>Pair Stairs for team {{ getName() }}</h2>
     <div class="matrix-parts-page">
-      <button class="matrix-parts-holder-tab" @click="selectedTab = 'Users'">
-        Users
-      </button>
-      <button class="matrix-parts-holder-tab" @click="selectedTab = 'Matrix'">
-        Stair Matrix
-      </button>
+      <div class="matrix-button-holder">
+        <button
+          class="matrix-parts-holder-tab"
+          v-bind:class="{
+            'matrix-parts-holder-tab__selected': isUsersTabSelected(),
+          }"
+          @click="selectedTab = 'Users'"
+        >
+          Users
+        </button>
+        <button
+          class="matrix-parts-holder-tab"
+          v-bind:class="{
+            'matrix-parts-holder-tab__selected': !isUsersTabSelected(),
+          }"
+          @click="selectedTab = 'Matrix'"
+        >
+          Stair Matrix
+        </button>
+        <div class="matrix-parts-holder-spacer" />
+      </div>
       <div class="matrix-parts-holder-contents">
-        <user-manager
-          v-if="
-            selectedTab === 'Users' ||
-            (selectedTab === null && getUsers?.length < 3)
-          "
-        />
-        <matrix-manager
-          :matrixName="matrixName"
-          v-if="
-            selectedTab === 'Matrix' ||
-            (selectedTab === null && getUsers?.length >= 3)
-          "
-        />
+        <user-manager v-if="isUsersTabSelected()" />
+        <matrix-manager :matrixName="matrixName" v-if="!isUsersTabSelected()" />
       </div>
     </div>
   </div>
@@ -53,6 +57,15 @@ export default defineComponent({
     getName() {
       return this.matrixName;
     },
+    isUsersTabSelected() {
+      if (this.selectedTab === "Matrix") {
+        return false;
+      }
+      return (
+        this.selectedTab === "Users" ||
+        ((this.selectedTab === null && this.getUsers?.length) || 0) < 3
+      );
+    },
   },
   computed: {
     getUsers(): Array<unknown> | null {
@@ -76,12 +89,21 @@ export default defineComponent({
 <style lang="scss" scoped>
 @import "../../colors.scss";
 
+.matrix-parts-page {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  width: 80%;
+}
+
 .matrix-parts-holder-tab {
   @include color-theme("border-color", "primary-accent");
 
-  margin-right: 1px;
-  font-size: 20px;
-  border-width: 2px 2px 0 2px;
+  height: 35px;
+  width: 180px;
+  cursor: pointer;
+  font-size: 16px;
+  border-width: 2px 2px 2px 2px;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
   background-color: transparent;
@@ -93,10 +115,29 @@ export default defineComponent({
   margin-left: auto;
   margin-right: auto;
   border: 2px solid;
-  border-radius: 4px;
+  border-radius: 0 0 4px 4px;
   height: 70%;
-  width: 80%;
+  width: 100%;
   display: flex;
   justify-content: center;
+  flex-direction: column;
+  border-top: 0px;
+}
+.matrix-parts-holder-tab__selected {
+  font-weight: 700;
+  font-size: 20px;
+  border-bottom: 0;
+}
+
+.matrix-button-holder {
+  display: flex;
+}
+
+.matrix-parts-holder-spacer {
+  @include color-theme("border-color", "primary-accent");
+
+  flex-grow: 1;
+  border-bottom: 2px solid;
+  margin-right: -3px;
 }
 </style>
