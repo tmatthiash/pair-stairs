@@ -15,7 +15,7 @@
       class="marching-ants"
       @matrixCellEdited="matrixCellEdited"
       v-if="isInEditMode"
-      :dateValue="getPairSetDate"
+      :dateValue="getUTCDate(getPairSetDate)"
     />
   </div>
 </template>
@@ -95,6 +95,12 @@ export default defineComponent({
         MutationTypes.SET_SELECTED_PAIR_LIST,
         newSelectedPairList
       );
+    },
+    getUTCDate(date: string) {
+      let originalDate = new Date(date);
+      let newDate = new Date();
+      newDate.setDate(originalDate.getUTCDate());
+      return newDate;
     },
     matrixCellEdited(changedDate: Date) {
       const editedPairSet = {
@@ -181,30 +187,22 @@ export default defineComponent({
     linear-gradient(to bottom, $a 50%, $b 50%);
 }
 
-@mixin marching-ants-v2-animation($ant-size, $id){
+@mixin marching-ants-v2-animation($ant-size, $id) {
   @keyframes marching-ants-#{$id} {
     0% {
-      background-position: 
-        0 0, 
-        0 100%, 
-        0 0, 
-        100% 0;
-    } 
+      background-position: 0 0, 0 100%, 0 0, 100% 0;
+    }
     100% {
-      background-position: 
-        2*$ant-size 0, 
-        -2*$ant-size 100%, 
-        0 -2*$ant-size, 
-        100% 2*$ant-size;
+      background-position: 2 * $ant-size 0, -2 * $ant-size 100%,
+        0 -2 * $ant-size, 100% 2 * $ant-size;
     }
   }
 }
 
 @include marching-ants-v2-animation(15px, 1);
 
-
 .marching-ants {
-  @include marching-ants-v2-init(15px, .5px, 2s, 1);
+  @include marching-ants-v2-init(15px, 0.5px, 2s, 1);
   @include marching-ants-v2-color(#fff, #000);
 }
 </style>

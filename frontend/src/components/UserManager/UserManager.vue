@@ -69,7 +69,8 @@ export default defineComponent({
 
 .user-manager {
   height: 100%;
-  width: 100%;
+  width: calc(100% - 30px);
+
   padding: 0 15px;
 }
 
@@ -91,7 +92,7 @@ export default defineComponent({
   @include color-theme("background-color", "primary-accent");
   @include color-theme("border-color", "primary-border");
   @include color-theme("color", "primary-accent-text");
-  
+
   margin: 0 16px;
   font-size: 20px;
   padding: 4px 16px;
