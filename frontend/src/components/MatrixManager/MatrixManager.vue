@@ -1,6 +1,14 @@
 <template>
   <div class="matrix-manager">
-    <button @click="toggleMode">TOGGLE MODE {{ isInEditMode }}</button>
+    <div class="matrix-manager-header">
+      <h2 class="matrix-manager-header-text">
+        Pick out the day's pairs and then submit to set them for today, or
+        change pairs manually with manal mode
+      </h2>
+      <button class="matrix-manager-button" @click="toggleMode">
+        {{ isInEditMode ? "Normal Mode" : "Manual Mode" }}
+      </button>
+    </div>
     <div
       class="matrix-manager-row"
       v-for="(userY, indexY) in getUserList()"
@@ -31,7 +39,14 @@
         {{ user.name }}
       </div>
     </div>
-    <button @click="setPairsForTheDay">SUBMIT</button>
+    <button
+      :disabled="isInEditMode"
+      class="matrix-manager-button"
+      :class="{ 'matrix-manager-button__disabled': isInEditMode }"
+      @click="setPairsForTheDay"
+    >
+      SUBMIT
+    </button>
   </div>
 </template>
 
@@ -83,9 +98,9 @@ export default defineComponent({
           console.log(err);
         });
     },
-    turnEditModeOff(){
+    turnEditModeOff() {
       this.isInEditMode = false;
-    }
+    },
   },
   mounted() {
     this.socket.emit("join", { matrixName: this.matrixName });
@@ -105,7 +120,41 @@ export default defineComponent({
 @import "../../colors.scss";
 
 .matrix-manager {
-  margin-top: 50px;
+  width: fit-content;
+  margin: auto;
+}
+
+.matrix-manager-header {
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 20px;
+}
+
+.matrix-manager-header-text {
+  margin: 0px;
+  font-size: 16px;
+  max-width: 60%;
+}
+
+.matrix-manager-button {
+  @include color-theme("background-color", "primary-accent");
+  @include color-theme("border-color", "primary-border");
+  @include color-theme("color", "primary-accent-text");
+
+  height: 40px;
+  font-size: 16px;
+  padding: 4px 16px;
+  text-decoration: none;
+  border: 1px solid;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.matrix-manager-button__disabled {
+  opacity: 0;
+  cursor: unset;
 }
 
 .matrix-manager-row {
@@ -125,6 +174,8 @@ export default defineComponent({
   width: 100px;
   border: 1px solid;
   margin: 1px;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .matrix-manager-cell {
@@ -139,6 +190,8 @@ export default defineComponent({
 
 .matrix-manager-cell-x-label {
   border-radius: unset;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .matrix-manager-blank-cell {

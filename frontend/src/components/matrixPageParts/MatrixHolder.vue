@@ -19,7 +19,7 @@
           }"
           @click="selectedTab = 'Matrix'"
         >
-          Stair Matrix
+          Pair Chart
         </button>
         <div class="matrix-parts-holder-spacer" />
       </div>
@@ -112,6 +112,8 @@ export default defineComponent({
 .matrix-parts-holder-contents {
   @include color-theme("border-color", "primary-accent");
 
+  overflow: auto;
+
   margin-left: auto;
   margin-right: auto;
   border: 2px solid;
@@ -122,6 +124,7 @@ export default defineComponent({
   justify-content: center;
   flex-direction: column;
   border-top: 0px;
+  min-height: 300px;
 }
 .matrix-parts-holder-tab__selected {
   font-weight: 700;

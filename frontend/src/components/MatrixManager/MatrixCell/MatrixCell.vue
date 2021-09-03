@@ -4,7 +4,7 @@
       v-if="!isInEditMode"
       class="matrix-cell"
       v-bind:style="{
-        backgroundColor: `rgba(255, 0, 0, ${getOpacityPercentage}`,
+        backgroundColor: `rgba(231, 65, 65, ${getOpacityPercentage}`,
       }"
       @click="toggleSelected"
       v-bind:class="{ 'matrix-cell__selected': isPairSelected }"
@@ -12,6 +12,7 @@
       <div>{{ getPairSetDate || "--" }}</div>
     </div>
     <styled-date-picker
+      class="marching-ants"
       @matrixCellEdited="matrixCellEdited"
       v-if="isInEditMode"
       :dateValue="getPairSetDate"
@@ -72,7 +73,7 @@ export default defineComponent({
       }
       const thisCellDate = new Date(this.getPairSetDate).getTime();
       const dateDiffFromMin = thisCellDate - minDate;
-      const dateDiffPercentage = 1 - (dateDiffFromMin / minMaxDateDiff);
+      const dateDiffPercentage = 1 - dateDiffFromMin / minMaxDateDiff;
       return dateDiffPercentage;
     },
   },
@@ -161,5 +162,55 @@ export default defineComponent({
   100% {
     -webkit-box-shadow: inset 0px 0px 8px 1.5px #24ff0d;
   }
+}
+
+@mixin marching-ants-v2-init($ant-size, $ant-width, $speed, $id) {
+  background-size: $ant-size $ant-width, $ant-size $ant-width,
+    $ant-width $ant-size, $ant-width $ant-size;
+  background-position: 0 0, 0 100%, 0 0, 100% 0;
+  background-repeat: repeat-x, repeat-x, repeat-y, repeat-y;
+  animation: marching-ants-#{$id} $speed;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-play-state: running;
+}
+@mixin marching-ants-v2-color($a, $b) {
+  background-image: linear-gradient(to right, $a 50%, $b 50%),
+    linear-gradient(to right, $a 50%, $b 50%),
+    linear-gradient(to bottom, $a 50%, $b 50%),
+    linear-gradient(to bottom, $a 50%, $b 50%);
+}
+
+@mixin marching-ants-v2-animation($ant-size, $id){
+  @keyframes marching-ants-#{$id} {
+    0% {
+      background-position: 
+        0 0, 
+        0 100%, 
+        0 0, 
+        100% 0;
+    } 
+    100% {
+      background-position: 
+        2*$ant-size 0, 
+        -2*$ant-size 100%, 
+        0 -2*$ant-size, 
+        100% 2*$ant-size;
+    }
+  }
+}
+
+@include marching-ants-v2-animation(15px, 1);
+
+
+.marching-ants {
+  @include marching-ants-v2-init(15px, .5px, 2s, 1);
+  @include marching-ants-v2-color(#fff, #000);
+}
+</style>
+
+<style lang="scss">
+.v3dp__datepicker > .v3dp__popout {
+  position: fixed;
 }
 </style>
