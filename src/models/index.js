@@ -4,6 +4,7 @@ const Sequelize = require("sequelize");
 console.log(dbConfig.USER)
 console.log(dbConfig.DB)
 console.log(dbConfig.PASSWORD)
+console.log(dbConfig.HOST)
 
 const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
   host: dbConfig.HOST,
