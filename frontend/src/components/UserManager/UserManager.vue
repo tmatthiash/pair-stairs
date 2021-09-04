@@ -16,7 +16,19 @@
       </div>
     </div>
     <div class="user-manager-users-list">
-      <div v-for="(user, index) in getUsers" :key="index">{{ user.name }}</div>
+      <div
+        class="user-manager-users-list-item"
+        v-for="(user, index) in getUsers"
+        :key="index"
+      >
+        <span class="user-manager-users-list-name">{{ user.name }}</span
+        ><button
+          class="user-manager-users-list-remove"
+          @click="removeUser(user.id)"
+        >
+          Remove
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -56,9 +68,21 @@ export default defineComponent({
             );
           }
         });
-      // axios.get(
-      //   `http://${process.env.VUE_APP_API_URL}:${process.env.VUE_APP_API_PORT}/api/user/create/`
-      // )
+    },
+    removeUser(id: number) {
+      axios
+        .put(
+          `http://${process.env.VUE_APP_API_URL}:${process.env.VUE_APP_API_PORT}/api/user/remove/`,
+          { userId: id }
+        )
+        .then((res) => {
+          if (res.status === 204) {
+            this.socket.emit(
+              "TRIGGER_UPDATE_USERS",
+              this.$store.state.pairMatrix
+            );
+          }
+        });
     },
   },
 });
@@ -112,5 +136,33 @@ export default defineComponent({
   border-radius: 5px;
   height: 30px;
   max-width: 300px;
+}
+
+.user-manager-users-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.user-manager-users-list-item {
+  width: 300px;
+  display: flex;
+  justify-content: space-between;
+}
+.user-manager-users-list-name {
+  font-weight: 700;
+}
+.user-manager-users-list-remove {
+  @include color-theme("background-color", "primary-accent");
+  @include color-theme("border-color", "primary-border");
+  @include color-theme("color", "primary-accent-text");
+
+  height: 26px;
+  font-size: 16px;
+  padding: 4px 16px;
+  text-decoration: none;
+  border: 1px solid;
+  border-radius: 5px;
+  cursor: pointer;
 }
 </style>

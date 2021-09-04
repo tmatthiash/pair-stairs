@@ -10,7 +10,7 @@
           }"
           @click="selectedTab = 'Users'"
         >
-          Users
+          Team Members
         </button>
         <button
           class="matrix-parts-holder-tab"

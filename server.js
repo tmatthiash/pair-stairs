@@ -99,24 +99,6 @@ const io = require("socket.io")(server, {
     }
 });
 
-// const wrap = middleware => (socket, next) => middleware(socket.request, {}, next);
-
-// io.use(wrap(sessionMiddleware));
-// io.use(wrap(passport.initialize()));
-// io.use(wrap(passport.session()));
-
-// io.use((socket, next) => {
-//     console.log("checking basic auth for all sockets ", socket.request.sessionStore)
-//     if (socket.request.user) {
-//         next();
-//     } else {
-//         console.log("auth error")
-//         next(new Error('unauthorized'))
-//     }
-// });
-
-
-
 require("./src/socketControllers/pairmatrix.socket")(io);
 require("./src/socketControllers/user.socket")(io);
 require("./src/socketControllers/pairset.socket")(io);

@@ -23,8 +23,6 @@ exports.create = async (req, res) => {
         password: passwordHash
     }
 
-    console.log("newMatrix ", newPairMatrix)
-
     PairMatrix.create(newPairMatrix)
         .then(data => {
             const response = {...data, password: "That's Secret"}

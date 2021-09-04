@@ -8,7 +8,6 @@ const db = require('./src/models/index');
 function CheckPassword(username, password) {
   return db.pairmatrix.findOne({ where: { name: username } }).then(
     (finduser) => {
-      console.log(finduser)
       if (finduser === null) {
         throw new Error(`room name ${username} not found`);
       }

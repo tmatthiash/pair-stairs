@@ -7,6 +7,8 @@ module.exports = app => {
     // router.get("/:name", users.getUsersForMatrix)
 
     router.post("/create/", user.create)
+    
+    router.put("/remove/", user.remove)
 
     router.get("/create/", user.test);
   

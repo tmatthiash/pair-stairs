@@ -46,13 +46,3 @@ exports = module.exports = async (io) => {
         })
     })
 }
-
-// exports = module.exports = function(io){
-//     console.log("hit controller")
-//     io.sockets.on('connection', function (socket) {
-//       socket.on('join', function (data) {
-//           console.log("join data, ", data);
-//         io.to(data).emit("UPDATE_MATRIX_INFO", "helllllloooo");
-//       });
-//     });
-//   }
