@@ -5,9 +5,12 @@ const passport = require('passport');
 const session = require('express-session');
 const express = require("express");
 const cors = require("cors");
+var history = require('connect-history-api-fallback');
+
 
 
 const app = express();
+app.use(history());
 
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
@@ -94,8 +97,7 @@ const server = require('http').createServer(app);
 
 const io = require("socket.io")(server, {
     cors: {
-        origin: "http://localhost:8081",
-        methods: ["GET", "POST", "PUSH"]
+        origin: "*"
     }
 });
 
