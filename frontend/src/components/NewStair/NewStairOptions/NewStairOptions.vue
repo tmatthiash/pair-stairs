@@ -30,7 +30,7 @@
         <button type="submit" class="new-stair-options-form-button">
           Create Stair Pairs
         </button>
-        <router-link class="new-stair-options-form-button" to="/homepage"
+        <router-link class="new-stair-options-form-button" to="/"
           >Back to Home Page</router-link
         >
       </div>
