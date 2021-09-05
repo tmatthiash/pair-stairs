@@ -18,6 +18,8 @@ exports.getUsersByMatrixId = async (matrixId) => {
 }
 
 exports.create = (req, res) => {
+    console.log("req ", req)
+    console.log("user", req.user);
     PairMatrix.findOne({
         where: { name: req.session.passport.user }
     }).then((foundMatrix) => {
