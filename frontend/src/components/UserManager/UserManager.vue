@@ -58,7 +58,8 @@ export default defineComponent({
       axios
         .post(
           `http://${process.env.VUE_APP_API_URL}:${process.env.VUE_APP_API_PORT}/api/user/create/`,
-          { userName: this.newUser }
+          { userName: this.newUser },
+          { withCredentials: true }
         )
         .then((res) => {
           if (res.status === 201) {
