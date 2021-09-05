@@ -202,6 +202,6 @@ export default defineComponent({
 
 <style lang="scss">
 .v3dp__datepicker > .v3dp__popout {
-  position: fixed;
+  position: fixed !important;
 }
 </style>
