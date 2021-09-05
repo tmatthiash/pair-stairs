@@ -106,7 +106,7 @@ export default defineComponent({
     const firstLetterCapitalized =
         this.matrixName.charAt(0).toUpperCase() +
         this.matrixName.slice(1).toLowerCase();
-    this.socket.emit("join", { matrixName: firstLetterCapitalized });
+    // this.socket.emit("join", { matrixName: firstLetterCapitalized });
     this.socket.on("SET_USER_PAIR_SETS", (data) => {
       console.log("setting user pairs")
       this.$store.commit(MutationTypes.SET_USER_PAIR_SETS, data);
