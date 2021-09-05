@@ -2,7 +2,7 @@
   <div class="home-page">
     <div class="home-page-banner">
       Track your pair programming dates to make pairing more effective. Log the dates
-      that team members pair together to help you plan each day's pairs. (PRE-ALPHA-WEBSITE-VERSION)
+      that team members pair together to help you plan each day's pairs. (pre-alpha website version)
     </div>
     <div class="home-page-button-holder">
       <router-link class="home-page-button-holder-button" to="/newStair"
@@ -31,7 +31,6 @@ export default defineComponent({
   @include color-theme("-webkit-box-shadow", "box-shadow-settings");
   @include color-theme("box-shadow", "box-shadow-settings");
 
-  padding-top: 150px;
   height: 100%;
   width: 100%;
 }
