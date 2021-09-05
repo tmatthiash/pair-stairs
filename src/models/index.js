@@ -19,7 +19,12 @@ console.log(dbConfig.HOST)
 //   }
 // });
 
-const sequelize = new Sequelize('sqlite::memory:')
+// const sequelize = new Sequelize('sqlite::memory:')
+
+const sequelize = new Sequelize({
+  dialect: 'sqlite',
+  storage: './database.sqlite'
+});
 
 const db = {};
 
