@@ -56,8 +56,9 @@ passport.serializeUser((user, done) => {
   done(null, user.name);
 });
 
-passport.deserializeUser((user, done) => {
-  getMatrixByName(user).then((user, err) => {
+passport.deserializeUser( async (user, done)=> {
+  await getMatrixByName(user).then((user, err) => {
+    console.log("deserializing ", user);
     return done(err, user);
   });
 });
