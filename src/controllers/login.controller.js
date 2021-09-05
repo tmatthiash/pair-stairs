@@ -3,7 +3,7 @@ const passport = require("passport");
 exports.isUserAuthenticated = (req, res) => {
   if (!req.user) {
     return res.status(200).send({ isUserAuthenticated: false });
-  } else if (req.user.dataValues.name !== req.params.name) {
+  } else if (capitalizeFirstLetter(req.user.dataValues.name) !== capitalizeFirstLetter(req.params.name)) {
     return res.status(200).send({ isUserAuthenticated: false });
   }
   else {
@@ -21,3 +21,7 @@ exports.login = (req, res, next) => {
     return res.status(200).send();
   })(req, res, next);
 };
+
+const capitalizeFirstLetter = (name) => {
+  return name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
+}

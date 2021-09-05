@@ -1,8 +1,8 @@
 <template>
   <div class="home-page">
     <div class="home-page-banner">
-      Welcome to Pair Stairs dot something, you ready to pair up some
-      stairs??????
+      Track your pair programming dates to make pairing more effective. Log the dates
+      that team members pair together to help you plan each day's pairs. (PRE-ALPHA-WEBSITE-VERSION)
     </div>
     <div class="home-page-button-holder">
       <router-link class="home-page-button-holder-button" to="/newStair"

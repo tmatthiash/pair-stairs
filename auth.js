@@ -6,10 +6,12 @@ const bcrypt = require('bcrypt');
 const db = require('./src/models/index');
 
 function CheckPassword(username, password) {
-  return db.pairmatrix.findOne({ where: { name: username } }).then(
+  const modifiedName = capitalizeFirstLetter(username);
+
+  return db.pairmatrix.findOne({ where: { name: modifiedName } }).then(
     (finduser) => {
       if (finduser === null) {
-        throw new Error(`room name ${username} not found`);
+        throw new Error(`room name ${modifiedName} not found`);
       }
       const test = bcrypt.compareSync(password, finduser.password);
       return test;
@@ -18,8 +20,9 @@ function CheckPassword(username, password) {
 }
 
 function getMatrixByName(username) {
+  const modifiedName = capitalizeFirstLetter(username);
   return db.pairmatrix.findOne({
-    where: { name: username },
+    where: { name: modifiedName },
     attributes: {
       exclude: ['password']
     }
@@ -33,18 +36,18 @@ passport.use(
     async (username, password, done) => {
       const checkPassword = await CheckPassword(username, password);
 
-        if(checkPassword) {
-            return getMatrixByName(username)
-            .then((user) => {
-                return done(null, user)
-            })
-            .catch((err) => {
-                return done(err)
-            })
-        }
-        else {
-            return done(null);
-        }
+      if (checkPassword) {
+        return getMatrixByName(username)
+          .then((user) => {
+            return done(null, user)
+          })
+          .catch((err) => {
+            return done(err)
+          })
+      }
+      else {
+        return done(null);
+      }
     }
   )
 );
@@ -58,3 +61,7 @@ passport.deserializeUser((user, done) => {
     return done(err, user);
   });
 });
+
+const capitalizeFirstLetter = (name) => {
+  return name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
+}

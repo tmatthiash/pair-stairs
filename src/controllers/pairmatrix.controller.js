@@ -16,8 +16,10 @@ exports.create = async (req, res) => {
 
     const passwordHash = await bcrypt.hash(req.body.password, 10);
 
+    const modifiedName = capitalizeFirstLetter(req.body.name);
+
     const newPairMatrix = {
-        name: req.body.name,
+        name: modifiedName,
         theme: "default",
         lastAccessed: new Date(),
         password: passwordHash
@@ -25,7 +27,7 @@ exports.create = async (req, res) => {
 
     PairMatrix.create(newPairMatrix)
         .then(data => {
-            const response = {...data, password: "That's Secret"}
+            const response = { ...data, password: "That's Secret" }
             res.status(201).send(response);
         })
         .catch(err => {
@@ -37,18 +39,21 @@ exports.create = async (req, res) => {
             });
         });
 
-    
+
 };
 
 exports.findByName = connectEnsureLogin.ensureLoggedIn(), (req, res) => {
     const name = req.params.name;
-    
-    if(req.params.name !== req.user.dataValue.name) {
+
+    const modifiedName = capitalizeFirstLetter(req.body.name);
+
+
+    if (req.params.name !== req.user.dataValue.name) {
         return res.status(401).send();
     }
 
     PairMatrix.findOne({
-        where: { name },
+        where: { name: modifiedName },
         attributes: {
             exclude: ['password']
         }
@@ -62,3 +67,7 @@ exports.findByName = connectEnsureLogin.ensureLoggedIn(), (req, res) => {
             });
         });
 };
+
+const capitalizeFirstLetter = (name) => {
+    return name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
+}
