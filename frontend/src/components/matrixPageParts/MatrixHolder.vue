@@ -24,8 +24,12 @@
         <div class="matrix-parts-holder-spacer" />
       </div>
       <div class="matrix-parts-holder-contents">
-        <user-manager v-if="isUsersTabSelected()" />
-        <matrix-manager :matrixName="matrixName" v-if="!isUsersTabSelected()" />
+        <user-manager v-if="isUsersTabSelected()" :socket="socket" />
+        <matrix-manager
+          :matrixName="matrixName"
+          v-if="!isUsersTabSelected()"
+          :socket="socket"
+        />
       </div>
     </div>
   </div>

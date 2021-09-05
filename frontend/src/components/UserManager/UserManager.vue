@@ -43,16 +43,14 @@ export default defineComponent({
   data() {
     return {
       newUser: "",
-      socket: io(
-        `${process.env.VUE_APP_API_URL}:${process.env.VUE_APP_API_PORT}`
-      ),
     };
   },
   computed: {
-    getUsers() {
+    getUsers(): Array<unknown> | null {
       return this.$store.state.userList;
     },
   },
+  props: ["socket"],
   methods: {
     addNewUser() {
       axios

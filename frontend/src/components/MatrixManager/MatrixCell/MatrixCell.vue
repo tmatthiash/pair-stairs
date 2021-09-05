@@ -30,15 +30,8 @@ import StyledDatePicker from "../../StyledDatePicker/StyledDatePicker.vue";
 
 export default defineComponent({
   name: "MatrixCell",
-  props: ["user1Id", "user2Id", "isInEditMode"],
+  props: ["user1Id", "user2Id", "isInEditMode", "socket"],
   components: { StyledDatePicker },
-  data() {
-    return {
-      socket: io(
-        `${process.env.VUE_APP_API_URL}:${process.env.VUE_APP_API_PORT}`
-      ),
-    };
-  },
   computed: {
     getPairSetDate(): Date | undefined {
       const pairList: PairSet[] = this.$store.state.pairSetList;

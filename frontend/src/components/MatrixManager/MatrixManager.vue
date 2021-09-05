@@ -25,6 +25,7 @@
             :user1Id="userX.id"
             :user2Id="userY.id"
             :isInEditMode="isInEditMode"
+            :socket="socket"
           />
         </div>
       </div>
@@ -59,13 +60,10 @@ import { MutationTypes } from "../../store/MutationTypes";
 
 export default defineComponent({
   name: "MatrixManager",
-  props: ["matrixName"],
+  props: ["matrixName", "socket"],
   data() {
     return {
-      isInEditMode: false,
-      socket: io(
-        `${process.env.VUE_APP_API_URL}:${process.env.VUE_APP_API_PORT}`
-      ),
+      isInEditMode: false
     };
   },
   components: { MatrixCell },
@@ -107,7 +105,7 @@ export default defineComponent({
         this.matrixName.charAt(0).toUpperCase() +
         this.matrixName.slice(1).toLowerCase();
     // this.socket.emit("join", { matrixName: firstLetterCapitalized });
-    this.socket.on("SET_USER_PAIR_SETS", (data) => {
+    this.socket.on("SET_USER_PAIR_SETS", (data: any) => {
       console.log("setting user pairs")
       this.$store.commit(MutationTypes.SET_USER_PAIR_SETS, data);
     });
