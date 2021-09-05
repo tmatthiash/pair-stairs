@@ -42,6 +42,7 @@ exports = module.exports = async (io) => {
                 users: sortedUsers,
                 pairSets: formattedSets
             }
+            console.log("emitting to ", matrixName)
             io.to(matrixName).emit("UPDATE_MATRIX_INFO", matrixData);
         })
     })

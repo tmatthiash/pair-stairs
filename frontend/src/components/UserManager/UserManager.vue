@@ -62,6 +62,7 @@ export default defineComponent({
         )
         .then((res) => {
           if (res.status === 201) {
+            console.log("here");
             this.socket.emit(
               "TRIGGER_UPDATE_USERS",
               this.$store.state.pairMatrix
@@ -76,6 +77,7 @@ export default defineComponent({
           { userId: id }
         )
         .then((res) => {
+          console.log("here");
           if (res.status === 204) {
             this.socket.emit(
               "TRIGGER_UPDATE_USERS",

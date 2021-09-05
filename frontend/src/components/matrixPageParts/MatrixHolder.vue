@@ -52,10 +52,14 @@ export default defineComponent({
   props: ["matrixName"],
   methods: {
     joinSocket() {
+      console.log("joining ", this.getName());
       this.socket.emit("join", { matrixName: this.getName() });
     },
     getName() {
-      return this.matrixName;
+      const firstLetterCapitalized =
+        this.matrixName.charAt(0).toUpperCase() +
+        this.matrixName.slice(1).toLowerCase();
+      return firstLetterCapitalized;
     },
     isUsersTabSelected() {
       if (this.selectedTab === "Matrix") {
@@ -75,11 +79,13 @@ export default defineComponent({
   mounted() {
     this.joinSocket();
     this.socket.on("UPDATE_MATRIX_INFO", (data) => {
+      console.log("setting matrix info");
       this.$store.commit(MutationTypes.SET_PAIR_MATRIX, data.pairMatrix);
       this.$store.commit(MutationTypes.SET_USER_LIST, data.users);
       this.$store.commit(MutationTypes.SET_USER_PAIR_SETS, data.pairSets);
     });
     this.socket.on("SET_USER_LIST", (data) => {
+      console.log("setting user list ", data);
       this.$store.commit(MutationTypes.SET_USER_LIST, data);
     });
   },
