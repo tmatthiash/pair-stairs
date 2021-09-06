@@ -55,7 +55,7 @@ export default defineComponent({
     addNewUser() {
       axios
         .post(
-          `{process.env.VUE_APP_API_URL}:${process.env.VUE_APP_API_PORT}/api/user/create/`,
+          `${process.env.VUE_APP_API_URL}:${process.env.VUE_APP_API_PORT}/api/user/create/`,
           { userName: this.newUser },
           { withCredentials: true }
         )
@@ -72,7 +72,7 @@ export default defineComponent({
     removeUser(id: number) {
       axios
         .put(
-          `{process.env.VUE_APP_API_URL}:${process.env.VUE_APP_API_PORT}/api/user/remove/`,
+          `${process.env.VUE_APP_API_URL}:${process.env.VUE_APP_API_PORT}/api/user/remove/`,
           { userId: id }
         )
         .then((res) => {

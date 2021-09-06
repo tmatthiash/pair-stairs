@@ -102,7 +102,7 @@ export default defineComponent({
       };
       axios
         .put(
-          `{process.env.VUE_APP_API_URL}:${process.env.VUE_APP_API_PORT}/api/pairset/editSinglePairSet`,
+          `${process.env.VUE_APP_API_URL}:${process.env.VUE_APP_API_PORT}/api/pairset/editSinglePairSet`,
           { editedPairSet },
           { withCredentials: true }
         )
