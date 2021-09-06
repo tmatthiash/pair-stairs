@@ -44,7 +44,7 @@ export default defineComponent({
       e.preventDefault();
       axios
         .post(
-          `http://${process.env.VUE_APP_API_URL}:${process.env.VUE_APP_API_PORT}/login`,
+          `{process.env.VUE_APP_API_URL}:${process.env.VUE_APP_API_PORT}/login`,
           { name: this.form.name, password: this.form.password }
         )
         .then((res) => {

@@ -79,7 +79,7 @@ export default defineComponent({
     setPairsForTheDay() {
       axios
         .post(
-          `http://${process.env.VUE_APP_API_URL}:${process.env.VUE_APP_API_PORT}/api/pairset/batch-create`,
+          `{process.env.VUE_APP_API_URL}:${process.env.VUE_APP_API_PORT}/api/pairset/batch-create`,
           { pairSetList: this.$store.state.selectedPairs },
           { withCredentials: true }
         )

@@ -58,14 +58,14 @@ export default defineComponent({
       e.preventDefault();
       axios
         .post(
-          `http://${process.env.VUE_APP_API_URL}:${process.env.VUE_APP_API_PORT}/api/pairmatrix/`,
+          `{process.env.VUE_APP_API_URL}:${process.env.VUE_APP_API_PORT}/api/pairmatrix/`,
           this.form
         )
         .then((res) => {
           if (res.status === 201) {
             axios
               .post(
-                `http://${process.env.VUE_APP_API_URL}:${process.env.VUE_APP_API_PORT}/login`,
+                `{process.env.VUE_APP_API_URL}:${process.env.VUE_APP_API_PORT}/login`,
                 this.form,
                 { withCredentials: true }
               )
