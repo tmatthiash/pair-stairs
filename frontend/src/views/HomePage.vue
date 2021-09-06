@@ -1,8 +1,9 @@
 <template>
   <div class="home-page">
     <div class="home-page-banner">
-      Track your pair programming dates to make pairing more effective. Log the dates
-      that team members pair together to help you plan each day's pairs. (pre-alpha website version)
+      Track your pair programming dates to make pairing more effective. Log the
+      dates that team members pair together to help you plan each day's pairs.
+      (pre-alpha website version)
     </div>
     <div class="home-page-button-holder">
       <router-link class="home-page-button-holder-button" to="/newStair"
@@ -58,5 +59,18 @@ export default defineComponent({
   text-decoration: none;
   border: 1px solid;
   border-radius: 5px;
+}
+
+@media only screen and (max-width: 725px) {
+  .home-page-banner {
+    font-size: 22px;
+  }
+  .home-page-button-holder {
+    display: flex;
+    flex-direction: column;
+  }
+  .home-page-button-holder-button {
+    margin-bottom: 30px;
+  }
 }
 </style>
