@@ -7,10 +7,10 @@
     </div>
     <div class="home-page-button-holder">
       <router-link class="home-page-button-holder-button" to="/newStair"
-        >Create a new stair set!</router-link
+        >Create a new pair tracker</router-link
       >
       <router-link class="home-page-button-holder-button" to="/joinmatrix"
-        >Join an existing room</router-link
+        >Join an existing pair tracker</router-link
       >
     </div>
   </div>

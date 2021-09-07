@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2>Pair Stairs for team {{ getName() }}</h2>
+    <h2>Pair Stairs for Team {{ getName() }}</h2>
     <div class="matrix-parts-page">
       <div class="matrix-button-holder">
         <button

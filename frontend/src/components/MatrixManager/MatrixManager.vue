@@ -46,7 +46,7 @@
       :class="{ 'matrix-manager-button__disabled': isInEditMode }"
       @click="setPairsForTheDay"
     >
-      SUBMIT
+      Lock in Today's Pairs
     </button>
   </div>
 </template>
