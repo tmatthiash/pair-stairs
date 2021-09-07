@@ -73,4 +73,9 @@ export default defineComponent({
   height: 100%;
   width: 100%;
 }
+@media only screen and (max-width: 725px) {
+  .pair-matrix-view {
+    padding-top: 40px;
+  }
+}
 </style>

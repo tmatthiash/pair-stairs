@@ -166,4 +166,20 @@ export default defineComponent({
   border-radius: 5px;
   cursor: pointer;
 }
+
+@media only screen and (max-width: 725px) {
+  .user-manager-header {
+    font-size: 16px;
+  }
+  .user-manager-header-area {
+    display: flex;
+    flex-direction: column;
+  }
+  .user-manager-new-user-input {
+    max-width: 70%;
+  }
+  .user-manager-add-user-area {
+    justify-content: space-between;
+  }
+}
 </style>

@@ -149,4 +149,25 @@ export default defineComponent({
   border-radius: 5px;
   font-weight: 400;
 }
+
+@media only screen and (max-width: 725px) {
+  .new-stair-options {
+    width: 90%;
+  }
+  .new-stair-options-form-input {
+    width: 100%;
+  }
+  .new-stair-options-form-button-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .new-stair-options-form-button {
+    padding: unset;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+}
 </style>

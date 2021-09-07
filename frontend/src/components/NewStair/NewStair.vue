@@ -38,4 +38,10 @@ export default defineComponent({
   font-size: 30px;
   margin-bottom: 20px;
 }
+
+@media only screen and (max-width: 725px) {
+  .new-stair {
+    padding-top: 15%;
+  }
+}
 </style>
