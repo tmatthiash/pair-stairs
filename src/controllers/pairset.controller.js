@@ -4,7 +4,7 @@ const PairSet = db.pairset;
 const User = db.user;
 
 exports.setTodayPairs = async (req, res) => {
-    const { pairSetList } = req.body;
+    const { pairSetList, date } = req.body;
     if (!pairSetList || pairSetList.length < 1) {
         res.status(400).send({
             message: "A pair set list is required!"
@@ -14,7 +14,7 @@ exports.setTodayPairs = async (req, res) => {
 
     await PairSet.destroy({
         where: {
-            date: new Date(),
+            date: date,
             pairmatrixId: req.user.id
         }
     });
@@ -25,7 +25,7 @@ exports.setTodayPairs = async (req, res) => {
 
     const pairSetToSave = pairSetList.map((ps) => {
         const newSet = {
-            date: new Date(),
+            date: date,
             userOneId: ps[0],
             userTwoId: ps[1],
             pairmatrixId: req.user.id

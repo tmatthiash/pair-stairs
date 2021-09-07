@@ -54,7 +54,6 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import MatrixCell from "./MatrixCell/MatrixCell.vue";
-import io from "socket.io-client";
 import axios from "axios";
 import { MutationTypes } from "../../store/MutationTypes";
 
@@ -80,7 +79,7 @@ export default defineComponent({
       axios
         .post(
           `${process.env.VUE_APP_API_URL}:${process.env.VUE_APP_API_PORT}/api/pairset/batch-create`,
-          { pairSetList: this.$store.state.selectedPairs },
+          { pairSetList: this.$store.state.selectedPairs, date: new Date() },
           { withCredentials: true }
         )
         .then((res) => {
