@@ -71,6 +71,7 @@ export default defineComponent({
   }
   .home-page-button-holder-button {
     margin-bottom: 30px;
+    font-size: 22px;
   }
 }
 </style>
