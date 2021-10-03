@@ -3,7 +3,7 @@
     <div class="home-page-banner">
       Track your pair programming dates to make pairing more effective. Log the
       dates that team members pair together to help you plan each day's pairs.
-      (pre-alpha website version)
+      (alpha website version)
     </div>
     <div class="home-page-button-holder">
       <router-link class="home-page-button-holder-button" to="/newStair"

@@ -103,7 +103,7 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
   margin: auto;
-  width: 80%;
+  width: 90%;
 }
 
 .matrix-parts-holder-tab {

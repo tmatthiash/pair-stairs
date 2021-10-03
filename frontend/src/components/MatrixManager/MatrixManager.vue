@@ -3,7 +3,7 @@
     <div class="matrix-manager-header">
       <h2 class="matrix-manager-header-text">
         Pick out the day's pairs and then submit to set them for today, or
-        change a pair manually with manual mode
+        change a pair date manually with manual mode
       </h2>
       <button class="matrix-manager-button" @click="toggleMode">
         {{ isInEditMode ? "Normal Mode" : "Manual Mode" }}

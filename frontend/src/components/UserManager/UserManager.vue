@@ -2,7 +2,7 @@
   <div class="user-manager">
     <div class="user-manager-header-area">
       <h3 class="user-manager-header">
-        Add people to the team, they'll show up in matrix tab
+        Add people to the team, they'll show up in pair chart tab
       </h3>
       <div class="user-manager-add-user-area">
         <input
