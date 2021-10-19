@@ -5,6 +5,8 @@
       dates that team members pair together to help you plan each day's pairs.
       (alpha website version)
     </div>
+    <img src="../assets/pairs.png" alt="Example Pair Matrix"/>
+    <div class="home-page-image-label">Example Tracker</div>
     <div class="home-page-button-holder">
       <router-link class="home-page-button-holder-button" to="/newStair"
         >Create a new pair tracker</router-link
@@ -46,6 +48,11 @@ export default defineComponent({
 
 .home-page-button-holder {
   margin-top: 16px;
+}
+
+.home-page-image-label {
+  font-size: 18px;
+  padding-bottom: 40px;
 }
 
 .home-page-button-holder-button {

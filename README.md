@@ -22,7 +22,7 @@ Now create a .env file in the root directory, it'll need the following attribute
 
 Create a 2nd .env file IN THE /FRONTEND DIRECTORY
 
-    VUE_APP_API_URL=localhost
+    VUE_APP_API_URL=http://localhost
 
     VUE_APP_API_PORT=8080
 
