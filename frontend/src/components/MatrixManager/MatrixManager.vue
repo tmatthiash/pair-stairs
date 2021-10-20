@@ -14,7 +14,18 @@
       v-for="(userY, indexY) in getUserList()"
       :key="indexY"
     >
-      <div class="matrix-manager-y-labels">{{ userY.name }}</div>
+      <div
+        class="matrix-manager-y-labels"
+        @mouseenter="yAxisMouseoverId = userY.id"
+        @mouseleave="yAxisMouseoverId = null"
+      >
+        <matrix-cell-tooltip
+          :userId="userY.id"
+          :mouseOverId="yAxisMouseoverId"
+          :oldestUserName="getOldestPairName(userY.id)"
+        />
+        {{ userY.name }}
+      </div>
       <div v-for="(userX, indexX) in getUserList()" :key="indexX">
         <div class="matrix-manager-cell" v-if="indexY - indexX > 0">
           <!-- {{ indexY - indexX }} -->
@@ -36,7 +47,14 @@
         class="matrix-manager-cell matrix-manager-cell-x-label"
         v-for="user in getUserList()"
         :key="user.id"
+        @mouseenter="xAxisMouseoverId = user.id"
+        @mouseleave="xAxisMouseoverId = null"
       >
+        <matrix-cell-tooltip
+          :userId="user.id"
+          :mouseOverId="xAxisMouseoverId"
+          :oldestUserName="getOldestPairName(user.id)"
+        />
         {{ user.name }}
       </div>
     </div>
@@ -53,7 +71,10 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import { PairSet } from "../../types/PairSet";
+import { User } from "../../types/User";
 import MatrixCell from "./MatrixCell/MatrixCell.vue";
+import MatrixCellTooltip from "./MatrixCellTooltip/MatrixCellTooltip.vue";
 import axios from "axios";
 import { MutationTypes } from "../../store/MutationTypes";
 
@@ -62,15 +83,39 @@ export default defineComponent({
   props: ["matrixName", "socket"],
   data() {
     return {
-      isInEditMode: false
+      isInEditMode: false,
+      xAxisMouseoverId: null,
+      yAxisMouseoverId: null,
     };
   },
-  components: { MatrixCell },
+  components: { MatrixCell, MatrixCellTooltip },
   methods: {
     getUserList() {
       if (this.$store.state.userList) {
         return this.$store.state.userList;
       }
+    },
+    getOldestPairName(userId: string): string {
+      if (this.getUserList()) {
+        const pairList: PairSet[] = this.$store.state.pairSetList;
+        const foundPairSet = pairList.filter((set) => {
+          return set.userIdList.includes(userId);
+        });
+        if (foundPairSet.length > 0) {
+          const oldestPair = foundPairSet.reduce((oldest, current) => {
+            return oldest?.date > current.date ? current : oldest;
+          });
+          const otherGuyId = oldestPair.userIdList?.filter((id) => {
+            return id !== userId;
+          });
+          const userList: User[] = this.getUserList() || [];
+          const otherGuy = userList.filter((user) => {
+            return user.id === otherGuyId[0];
+          });
+          return otherGuy[0].name;
+        }
+      }
+      return "";
     },
     toggleMode() {
       this.isInEditMode = !this.isInEditMode;
@@ -99,13 +144,13 @@ export default defineComponent({
       this.isInEditMode = false;
     },
   },
-  mounted() {      
+  mounted() {
     const firstLetterCapitalized =
-        this.matrixName.charAt(0).toUpperCase() +
-        this.matrixName.slice(1).toLowerCase();
+      this.matrixName.charAt(0).toUpperCase() +
+      this.matrixName.slice(1).toLowerCase();
     // this.socket.emit("join", { matrixName: firstLetterCapitalized });
     this.socket.on("SET_USER_PAIR_SETS", (data: any) => {
-      console.log("setting user pairs")
+      console.log("setting user pairs");
       this.$store.commit(MutationTypes.SET_USER_PAIR_SETS, data);
     });
   },
