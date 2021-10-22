@@ -5,7 +5,11 @@
       dates that team members pair together to help you plan each day's pairs.
       (alpha website version)
     </div>
-    <img src="../assets/pairs.png" alt="Example Pair Matrix"/>
+    <img
+      class="home-page-image"
+      src="../assets/pairs.png"
+      alt="Example Pair Matrix"
+    />
     <div class="home-page-image-label">Example Tracker</div>
     <div class="home-page-button-holder">
       <router-link class="home-page-button-holder-button" to="/newStair"
@@ -50,6 +54,13 @@ export default defineComponent({
   margin-top: 16px;
 }
 
+.home-page-image {
+  @include color-theme("border-color", "primary-accent");
+
+  border: 2px solid;
+  border-radius: 6px;
+}
+
 .home-page-image-label {
   font-size: 18px;
   padding-bottom: 40px;
@@ -79,6 +90,14 @@ export default defineComponent({
   .home-page-button-holder-button {
     margin-bottom: 30px;
     font-size: 22px;
+  }
+
+  .home-page-image {
+    display: none;
+  }
+  
+  .home-page-image-label {
+    display: none;
   }
 }
 </style>
