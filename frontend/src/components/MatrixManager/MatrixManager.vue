@@ -2,8 +2,8 @@
   <div class="matrix-manager">
     <div class="matrix-manager-header">
       <h2 class="matrix-manager-header-text">
-        Pick out the day's pairs and then submit to set them for today, or
-        change a pair date manually with manual mode
+        Set today's pairs and then submit to set them for the day, or
+        change an individual pair date manually with manual mode
       </h2>
       <button class="matrix-manager-button" @click="toggleMode">
         {{ isInEditMode ? "Normal Mode" : "Manual Mode" }}
@@ -64,7 +64,7 @@
       :class="{ 'matrix-manager-button__disabled': isInEditMode }"
       @click="setPairsForTheDay"
     >
-      Lock in Today's Pairs
+      Set Pairs for Today
     </button>
   </div>
 </template>

@@ -8,7 +8,7 @@
         <input
           placeholder="Name of new person"
           class="user-manager-new-user-input"
-          v-model="newUser"
+          v-model="newUser"          
         />
         <button class="user-manager-add-user-button" @click="addNewUser">
           Add
